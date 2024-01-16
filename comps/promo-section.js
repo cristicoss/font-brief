@@ -2,7 +2,6 @@
 
 export default class Promo {
   constructor() {
-    console.log();
     // this.store = store;
     this.handleIncrement();
     this.handleDecrement();
@@ -21,6 +20,5 @@ export default class Promo {
 
   renderFonts(store) {
     store.fonts = fonts.slice(0, 5);
-    console.log(store.fonts[0].imgTitle);
   }
 }

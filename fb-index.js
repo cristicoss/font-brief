@@ -28,7 +28,6 @@ let loadedFonts = [];
     const data = await fetchedFonts;
     loadedFonts.push(...data);
     createFontsList(loadedFonts);
-    console.log(loadedFonts);
   } catch (error) {
     console.error("Error while fetching fonts data:", error);
   }
@@ -52,6 +51,7 @@ export class App {
 
     this.store = store;
     this.counter = counter;
+    console.log(this.store.clicks1);
 
     this._checkUncheck();
 
@@ -117,6 +117,15 @@ const createFontsList = function (fonts) {
     fonts: fonts.slice(0, 5),
     counter: 0,
     listType: true,
+
+    clicks1: 0,
+    clicks2: 0,
+    clicks3: 0,
+    clicks4: 0,
+    clicks5: 0,
+    clicks6: 0,
+    clicks7: 0,
+    clicks8: 0,
   });
 
   createApp({
