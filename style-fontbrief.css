@@ -1,0 +1,124 @@
+@media screen and (min-width: 991px) {
+  .dyn-style-2 {
+    grid-column-start: span 2;
+    grid-column-end: span 2;
+    grid-row-start: span 1;
+    grid-row-end: span 1;
+  }
+}
+
+@keyframes pulsate {
+  0% {
+    opacity: 0; /* Initial opacity */
+  }
+  50% {
+    opacity: 1; /* Max opacity */
+  }
+  100% {
+    opacity: 0; /* Final opacity */
+  }
+}
+
+.loading_logo {
+  animation: pulsate 2s ease-in-out infinite; /* Adjust the duration as needed */
+}
+
+.font-list_item {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.font-list_item.visible {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.promo-font_wrapper.a {
+  animation: moveStripe1 35s linear infinite;
+  animation-timing-function: linear;
+}
+.promo-font_wrapper.b {
+  animation: moveStripe2 35s linear infinite;
+  animation-timing-function: linear;
+}
+.promo-font_wrapper.c {
+  animation: moveStripe3 35s linear infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes moveStripe1 {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+@keyframes moveStripe2 {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+@keyframes moveStripe3 {
+  0% {
+    transform: translateX(200%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.promo-font-2_wrapper.a {
+  animation: moveStripe4 35s linear infinite;
+  animation-timing-function: linear;
+}
+.promo-font-2_wrapper.b {
+  animation: moveStripe5 35s linear infinite;
+  animation-timing-function: linear;
+}
+.promo-font-2_wrapper.c {
+  animation: moveStripe6 35s linear infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes moveStripe4 {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+@keyframes moveStripe5 {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+@keyframes moveStripe6 {
+  0% {
+    transform: translateX(-200%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.sponsor-stripe_text.a {
+  animation: moveStripe1 35s linear infinite;
+  animation-timing-function: linear;
+}
+.sponsor-stripe_text.b {
+  animation: moveStripe2 35s linear infinite;
+  animation-timing-function: linear;
+}
+.sponsor-stripe_text.c {
+  animation: moveStripe2 35s linear infinite;
+  animation-timing-function: linear;
+}
