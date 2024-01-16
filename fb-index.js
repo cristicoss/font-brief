@@ -105,7 +105,7 @@ export class App {
       } else this.store.listType = true;
       this._showItemsWithFadeIn();
       this.store.counter = fonts.length;
-      // console.log(this.store.count);
+      console.log(this.store.clicks1);
     });
   }
 }
