@@ -129,17 +129,71 @@ const createFontsList = function (fonts) {
     counter: 0,
     listType: true,
 
-    clicks: [0, 0, 0, 0, 0, 0, 0, 0],
+    clicks: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+    divIndex: 0,
+    allFiltersFromThisCat: [],
+    divPos: 0,
   });
 
   createApp({
     store,
     handleClick(event) {
-      const divIndex = parseInt(event.target.getAttribute("data-atr"));
-      this.store.clicks[divIndex] = (this.store.clicks[divIndex] + 1) % 3;
+      this.store.divIndex = parseInt(event.target.getAttribute("data-atr"));
+      this.store.divPos = parseInt(event.target.getAttribute("data-pos"));
+      this.store.clicks[this.store.divIndex] =
+        (this.store.clicks[this.store.divIndex] + 1) % 3;
 
-      // if (this.store.clicks[divIndex] === 0) {
-      // }
+      const selector = `div[data-atr^="${this.store.divIndex}"]`;
+      this.store.allFiltersFromThisCat = document.querySelectorAll(selector);
+      console.log(this.store.allFiltersFromThisCat);
+    },
+
+    handleMouseOver(event) {
+      if (
+        this.store.divIndex ===
+          parseInt(event.target.getAttribute("data-atr")) &&
+        this.store.clicks[parseInt(event.target.getAttribute("data-atr"))] === 1
+      ) {
+        const boxIndex = parseInt(event.target.getAttribute("data-pos"));
+        if (boxIndex < this.store.divPos) {
+          for (let i = boxIndex - 1; i <= this.store.divPos - 1; i++) {
+            this.store.allFiltersFromThisCat[i].classList.remove("blue");
+            this.store.allFiltersFromThisCat[i].classList.add("blue");
+          }
+
+          for (let i = 0; i <= boxIndex - 1; i++) {
+            this.store.allFiltersFromThisCat[i].classList.remove("blue");
+          }
+        }
+
+        if (boxIndex > this.store.divPos) {
+          for (let i = this.store.divPos - 1; i <= boxIndex; i++) {
+            this.store.allFiltersFromThisCat[i].classList.remove("blue");
+            this.store.allFiltersFromThisCat[i].classList.add("blue");
+          }
+
+          for (let i = boxIndex; i <= 4; i++) {
+            this.store.allFiltersFromThisCat[i].classList.remove("blue");
+          }
+        }
+      }
+    },
+
+    handleMouseOut(event) {
+      if (
+        this.store.divIndex ===
+          parseInt(event.target.getAttribute("data-atr")) &&
+        this.store.clicks[parseInt(event.target.getAttribute("data-atr"))] === 1
+      ) {
+        const boxIndex = parseInt(event.target.getAttribute("data-pos"));
+        console.log(this.store.divPos, boxIndex);
+        for (let i = 0; i < this.store.divPos - 1; i++) {
+          this.store.allFiltersFromThisCat[i].classList.remove("blue");
+        }
+        for (let i = this.store.divPos; i < 5; i++) {
+          this.store.allFiltersFromThisCat[i].classList.remove("blue");
+        }
+      }
     },
     updateList: new App(store),
   }).mount("#app");

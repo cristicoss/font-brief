@@ -13,11 +13,8 @@ export default function _checkUncheck() {
       if (!currCheckbox) return;
 
       arrToFilter.push(currCheckbox.dataset.atr);
-      nextTick(() => {
-        console.log(this.store.clicks[checkboxIndex + 6]);
-      });
+
       if (this.store.clicks[checkboxIndex] === 0) {
-        console.log("uncheck");
         this._updateUrl(e.target.dataset.atr.slice(0, -1) + "x");
 
         return;
