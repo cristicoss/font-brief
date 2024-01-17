@@ -1,37 +1,29 @@
 import { checkboxesContainer } from "../globalVars.js";
+import { nextTick } from "https://unpkg.com/petite-vue?module";
 
 export default function _checkUncheck() {
-  // let counter = 0;
   checkboxesContainer.forEach((check) => {
     check.addEventListener("click", (e) => {
-      // counter++;
-      // console.log(counter);
-      // listTop.scrollIntoView();
-      // console.log(window.location.hash.slice(1));
       const uncheck = check.querySelector(".uncheck");
 
       const allCheckboxes = [...check.querySelectorAll(".filter_box")];
       let arrToFilter = [];
       const currCheckbox = e.target.closest(".filter_box");
-      // console.log(currCheckbox.dataset.atr);
+      const checkboxIndex = Number(currCheckbox.dataset.atr.slice(0, -1));
       if (!currCheckbox) return;
 
       arrToFilter.push(currCheckbox.dataset.atr);
-      // console.log(arrToFilter);
-
-      if (currCheckbox.classList.contains("blue")) {
-        //   currCheckbox.classList.remove("blue");
-
+      nextTick(() => {
+        console.log(this.store.clicks[checkboxIndex + 6]);
+      });
+      if (this.store.clicks[checkboxIndex] === 0) {
+        console.log("uncheck");
         this._updateUrl(e.target.dataset.atr.slice(0, -1) + "x");
-        // console.log(e.target.dataset.atr.slice(0, -1) + "x");
 
         return;
       } else {
-        //   currCheckbox.classList.add("blue");
-
         allCheckboxes.forEach((active) => {
           if (active.classList.contains("blue") && active !== currCheckbox) {
-            // uncheck.classList.remove("hidden");
             // if first box is before the last box
             if (
               allCheckboxes.indexOf(active) <
@@ -42,8 +34,6 @@ export default function _checkUncheck() {
                 i <= allCheckboxes.indexOf(currCheckbox);
                 i++
               ) {
-                //   allCheckboxes[i].classList.remove("blue");
-                //   allCheckboxes[i].classList.add("blue");
                 arrToFilter.push(allCheckboxes[i].dataset.atr);
               }
             }
@@ -58,8 +48,6 @@ export default function _checkUncheck() {
                 i <= allCheckboxes.indexOf(active);
                 i++
               ) {
-                //   allCheckboxes[i].classList.remove("blue");
-                //   allCheckboxes[i].classList.add("blue");
                 arrToFilter.push(allCheckboxes[i].dataset.atr);
               }
             }

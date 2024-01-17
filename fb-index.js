@@ -1,3 +1,16 @@
+/* De pus in Webflow pt test
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.24.0"></script>
+<!--<script src="https://cristicoss.github.io/fontbrief-dynamic-list/fonts.js" defer></script>-->
+<!--<script src="https://hcxyoffxqkwbpmsktmub.supabase.co/storage/v1/object/public/test/fontbrief-dynamic-list_index.js?t=2023-10-19T15%3A51%3A54.042Z" defer></script>-->
+<!--<link rel="stylesheet" href="https://hcxyoffxqkwbpmsktmub.supabase.co/storage/v1/object/public/test/style-fontbrief.css?t=2023-10-19T15%3A52%3A54.648Z" defer>-->
+
+<script type="module" src="http://localhost:5500/fb-index.js" defer></script>
+<link rel="stylesheet" href="http://localhost:5500/style-fontbrief.css" defer>
+
+<script type="module" src="https://cristicoss.github.io/font-brief/fb-index.js" defer></script>
+<link rel="stylesheet" href="https://cristicoss.github.io/font-brief/style-fontbrief.css" defer>
+*/
+
 //// Trebuie sa schimb # cu & in url
 
 "use strict";
@@ -51,7 +64,6 @@ export class App {
 
     this.store = store;
     this.counter = counter;
-    console.log(this.store.clicks1);
 
     this._checkUncheck();
 
@@ -105,7 +117,6 @@ export class App {
       } else this.store.listType = true;
       this._showItemsWithFadeIn();
       this.store.counter = fonts.length;
-      console.log(this.store.clicks1);
     });
   }
 }
@@ -118,18 +129,18 @@ const createFontsList = function (fonts) {
     counter: 0,
     listType: true,
 
-    clicks1: 0,
-    clicks2: 0,
-    clicks3: 0,
-    clicks4: 0,
-    clicks5: 0,
-    clicks6: 0,
-    clicks7: 0,
-    clicks8: 0,
+    clicks: [0, 0, 0, 0, 0, 0, 0, 0],
   });
 
   createApp({
     store,
+    handleClick(event) {
+      const divIndex = parseInt(event.target.getAttribute("data-atr"));
+      this.store.clicks[divIndex] = (this.store.clicks[divIndex] + 1) % 3;
+
+      // if (this.store.clicks[divIndex] === 0) {
+      // }
+    },
     updateList: new App(store),
   }).mount("#app");
 };
