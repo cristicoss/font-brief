@@ -161,7 +161,7 @@ const createFontsList = function (fonts) {
             this.store.allFiltersFromThisCat[i].classList.add("blue");
           }
 
-          for (let i = 0; i <= boxIndex - 1; i++) {
+          for (let i = 0; i <= boxIndex - 2; i++) {
             this.store.allFiltersFromThisCat[i].classList.remove("blue");
           }
         }
@@ -177,6 +177,10 @@ const createFontsList = function (fonts) {
           }
         }
       }
+      if (
+        this.store.clicks[parseInt(event.target.getAttribute("data-atr"))] !== 1
+      )
+        event.target.classList.add("hover-blue");
     },
 
     handleMouseOut(event) {
@@ -194,6 +198,7 @@ const createFontsList = function (fonts) {
           this.store.allFiltersFromThisCat[i].classList.remove("blue");
         }
       }
+      event.target.classList.remove("hover-blue");
     },
     updateList: new App(store),
   }).mount("#app");

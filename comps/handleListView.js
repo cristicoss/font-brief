@@ -7,22 +7,32 @@ export function _handleListView() {
   const changeView = function () {
     secondThis._readUrl();
   };
+
+  gridBtn.addEventListener("click", function () {
+    gridBtn.classList.add("clicked");
+    columnsBtn.classList.remove("clicked");
+    listBtn.classList.remove("clicked");
+    list.classList.remove("columns");
+    list.classList.remove("list");
+    list.classList.add("grid");
+    viewList = "grid";
+    changeView();
+  });
+
   columnsBtn.addEventListener("click", function () {
-    // console.log(filterF);
+    columnsBtn.classList.add("clicked");
+    gridBtn.classList.remove("clicked");
+    listBtn.classList.remove("clicked");
     list.classList.remove("grid");
     list.classList.add("columns");
     viewList = "columns";
     changeView();
   });
 
-  gridBtn.addEventListener("click", function () {
-    list.classList.remove("columns");
-    list.classList.add("grid");
-    viewList = "grid";
-    changeView();
-  });
-
   listBtn.addEventListener("click", function () {
+    listBtn.classList.add("clicked");
+    gridBtn.classList.remove("clicked");
+    columnsBtn.classList.remove("clicked");
     list.classList.remove("columns");
     list.classList.remove("grid");
     viewList = "list";
