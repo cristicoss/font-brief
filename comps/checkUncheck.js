@@ -9,7 +9,7 @@ export default function _checkUncheck() {
       const allCheckboxes = [...check.querySelectorAll(".filter_box")];
       let arrToFilter = [];
       const currCheckbox = e.target.closest(".filter_box");
-      const checkboxIndex = Number(currCheckbox.dataset.atr.slice(0, -1));
+      const checkboxIndex = Number(currCheckbox.dataset?.atr.slice(0, -1));
       if (!currCheckbox) return;
 
       arrToFilter.push(currCheckbox.dataset.atr);
@@ -51,23 +51,6 @@ export default function _checkUncheck() {
           }
         });
       }
-      /*
-        // Uncheck all
-        uncheck?.addEventListener("click", (e) => {
-          console.log("uncheck");
-          for (check of allCheckboxes) {
-            check.classList.remove("blue");
-          }
-          //   for (let i = 0; i <= 4; i++)
-          //     allCheckboxes[i].classList.remove("blue");
-          uncheck.classList.remove("hidden");
-          uncheck.classList.add("hidden");
-          // this._updateUrl(e.target.dataset.atr.slice(0, -1) + "x");
-          console.log(e.target.dataset.atr.slice(0, -1) + "x");
-
-          return;
-        });
-        */
 
       const uniqueArrToFilter = [...new Set(arrToFilter)];
       this._updateUrl(uniqueArrToFilter);

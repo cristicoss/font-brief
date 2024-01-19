@@ -145,7 +145,6 @@ const createFontsList = function (fonts) {
 
       const selector = `div[data-atr^="${this.store.divIndex}"]`;
       this.store.allFiltersFromThisCat = document.querySelectorAll(selector);
-      console.log(this.store.allFiltersFromThisCat);
     },
 
     handleMouseOver(event) {
