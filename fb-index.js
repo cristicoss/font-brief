@@ -31,6 +31,7 @@ import _updateFilters from "./comps/updateFilterBtns.js";
 import _updateUrl from "./comps/updateUrl.js";
 import _readUrl from "./comps/readUrl.js";
 import _filterFonts from "./comps/filterFonts.js";
+import _pausePromoSection from "./comps/promo-section.js";
 
 import { list, resetBtn, itemsPerPage } from "./globalVars.js";
 
@@ -61,10 +62,12 @@ export class App {
     this._updateUrl = _updateUrl;
     this._readUrl = _readUrl;
     this._filterFonts = _filterFonts;
+    this._pausePromoSection = _pausePromoSection;
 
     this.store = store;
     this.counter = counter;
 
+    this._pausePromoSection();
     this._checkUncheck();
 
     resetBtn.addEventListener("click", () => this._reset());
@@ -88,10 +91,11 @@ export class App {
     const span2El = list.querySelectorAll(":nth-child(6n+3), :nth-child(6n+4)");
 
     if (viewList === "grid") {
-      fontItem.forEach((el) => el.classList.add("dyn-style-1"));
+      fontItem.forEach((el) => el.classList.add("dyn-style-0"));
       span2El.forEach((element) => {
         element.classList.remove("dyn-style-2");
         element.classList.remove("dyn-style-1");
+        element.classList.remove("dyn-style-0");
         element.classList.add("dyn-style-2");
       });
     }
@@ -100,6 +104,7 @@ export class App {
       fontItem.forEach((element) => {
         element.classList.remove("dyn-style-1");
         element.classList.remove("dyn-style-2");
+        element.classList.remove("dyn-style-0");
         element.classList.add("dyn-style-1");
       });
     }
@@ -108,6 +113,7 @@ export class App {
       fontItem.forEach((element) => {
         element.classList.remove("dyn-style-1");
         element.classList.remove("dyn-style-2");
+        element.classList.remove("dyn-style-0");
       });
     }
 
