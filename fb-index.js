@@ -33,7 +33,7 @@ import _readUrl from "./comps/readUrl.js";
 import _filterFonts from "./comps/filterFonts.js";
 import _pausePromoSection from "./comps/promo-section.js";
 
-import { list, resetBtn, itemsPerPage } from "./globalVars.js";
+import { list, resetBtn, itemsPerPage, allCheckboxes } from "./globalVars.js";
 
 let loadedFonts = [];
 
@@ -63,6 +63,7 @@ export class App {
     this._readUrl = _readUrl;
     this._filterFonts = _filterFonts;
     this._pausePromoSection = _pausePromoSection;
+    this._setClicks = this._setClicks.bind(this);
 
     this.store = store;
     this.counter = counter;
@@ -71,23 +72,36 @@ export class App {
     this._checkUncheck();
 
     resetBtn.addEventListener("click", () => this._reset());
+
     ["hashchange", "load"].forEach((ev) =>
-      window.addEventListener(ev, this._readUrl)
+      window.addEventListener(ev, this._readUrl())
     );
 
-    this._renderFonts(this.store.fonts);
-    this._paginate(this.store.fonts);
-    this._pagBtnHandler(this.store.fonts);
+    this._setClicks();
 
     this._handleListView();
-    // this._handleMouseover();
+  }
+
+  _setClicks() {
+    const self = this;
+    const indexBox = [];
+    allCheckboxes.forEach(function (box) {
+      if (box.classList.contains("blue")) {
+        indexBox.push(+box.dataset.atr.slice(0, 1));
+      }
+    });
+    const uniqueIndexBox = [...new Set(indexBox)];
+
+    uniqueIndexBox.forEach(function (index) {
+      self.store.clicks[index] = 2;
+    });
   }
 
   ////// Render list of fonts /////
   ////// Don't move it in a separate file, it work with a delay /////
-  async _renderFonts(fonts) {
-    const fontItem = document.querySelectorAll(".font-list_item");
+  async _renderFonts(fonts, itemsPerPage) {
     this.store.fonts = fonts.slice(0, itemsPerPage);
+    const fontItem = document.querySelectorAll(".font-list_item");
     const span2El = list.querySelectorAll(":nth-child(6n+3), :nth-child(6n+4)");
 
     if (viewList === "grid") {
@@ -122,7 +136,7 @@ export class App {
         this.store.listType = false;
       } else this.store.listType = true;
       this._showItemsWithFadeIn();
-      this.store.counter = fonts.length;
+      // this.store.counter = fonts.length;
     });
   }
 }
@@ -172,7 +186,8 @@ const createFontsList = function (fonts) {
         }
 
         if (boxIndex > this.store.divPos) {
-          for (let i = this.store.divPos - 1; i <= boxIndex; i++) {
+          for (let i = this.store.divPos - 1; i <= boxIndex - 1; i++) {
+            // console.log(this.store.allFiltersFromThisCat[i]);
             this.store.allFiltersFromThisCat[i].classList.remove("blue");
             this.store.allFiltersFromThisCat[i].classList.add("blue");
           }
@@ -195,7 +210,7 @@ const createFontsList = function (fonts) {
         this.store.clicks[parseInt(event.target.getAttribute("data-atr"))] === 1
       ) {
         const boxIndex = parseInt(event.target.getAttribute("data-pos"));
-        console.log(this.store.divPos, boxIndex);
+        // console.log(this.store.divPos, boxIndex);
         for (let i = 0; i < this.store.divPos - 1; i++) {
           this.store.allFiltersFromThisCat[i].classList.remove("blue");
         }

@@ -1,46 +1,71 @@
 export default function _updateUrl(str) {
-  /*
   if (!str) {
     this._readUrl();
     return;
   }
 
-  console.log(str);
-  let expr = "";
-  let elgnt = "";
-  let frndl = "";
-  let orgnc = "";
-  let prgrssv = "";
-  let drng = "";
-  let dscrt = "";
-  let wrm = "";
+  const params = [
+    {
+      name: "expr",
+      value: "",
+    },
+    {
+      name: "elgnt",
+      value: "",
+    },
+    {
+      name: "frndl",
+      value: "",
+    },
+    {
+      name: "orgnc",
+      value: "",
+    },
+    {
+      name: "prgrssv",
+      value: "",
+    },
+    {
+      name: "drng",
+      value: "",
+    },
+    {
+      name: "dscrt",
+      value: "",
+    },
+    {
+      name: "wrm",
+      value: "",
+    },
+  ];
 
-  const paramValue = str.join("");
-  console.log(paramValue);
-  if (paramValue.slice(0, 1) === "1") expr = "expr";
-  if (paramValue.slice(0, 1) === "2") elgnt = "elgnt";
+  const url = new URL(window.location.href);
 
-  if (str.toString().endsWith("x")) {
-    const url = new URL(window.location.href);
-    url.searchParams.delete(expr);
+  function updateQueryParam(key, value) {
+    url.searchParams.set(key, value);
+
+    if (value.endsWith("x")) {
+      url.searchParams.delete(key);
+    }
     window.history.pushState({}, "", url);
-    return;
   }
 
-  const baseUrl = [
-    window.location.protocol,
-    "//",
-    window.location.host,
-    window.location.pathname,
-  ].join("");
+  const paramValue = str.join("");
 
-  const url = new URL(baseUrl);
-  url.searchParams.set(expr, paramValue);
+  params.forEach((param, index) => {
+    if (+paramValue.slice(0, 1) - 1 === index) {
+      param.value = paramValue;
+      updateQueryParam(param.name, param.value);
+    }
+  });
 
-  // Update the URL without reloading the page
-  window.history.pushState({ path: url.href }, "", url.href);
+  if (paramValue.startsWith("page")) {
+    updateQueryParam("pag", paramValue.slice(4));
+  }
+
   this._readUrl();
-  */
+
+  /*
 
   if (!str) {
     this._readUrl();
@@ -61,4 +86,5 @@ export default function _updateUrl(str) {
   history.pushState(null, null, url.toString().replace(/,/g, ""));
 
   this._readUrl();
+  */
 }

@@ -1,8 +1,11 @@
 export default function _reset() {
   const url = new URL(window.location.href);
-  url.hash = "";
-  history.pushState(null, null, url.toString().replace(/,/g, ""));
-  // this._readUrl();
+  const baseUrl = url.origin + url.pathname;
+
+  window.history.pushState({}, "", baseUrl);
   this._readUrl();
-  this.hashFragment = [];
+
+  for (let i = 0; i <= 8; i++) {
+    this.store.clicks[i] = 0;
+  }
 }
