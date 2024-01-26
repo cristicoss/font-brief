@@ -7,7 +7,6 @@ export default function _showItemsWithFadeIn() {
   // list.classList.remove("hidden");
   fontItem.forEach((item) => {
     const index = item.dataset.index;
-
     // item.classList.add("visible");
     item.classList.remove("visible");
     setTimeout(() => {

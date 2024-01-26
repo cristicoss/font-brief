@@ -14,4 +14,5 @@ export const columnsBtn = document.querySelector(".columns-view_btn");
 export const checkboxesContainer = document.querySelectorAll(
   ".filter_boxes-container"
 );
-//smooth
+
+export const fontItem = document.querySelectorAll(".font-list_item");

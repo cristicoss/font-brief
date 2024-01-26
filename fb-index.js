@@ -20,6 +20,10 @@ import {
   nextTick,
 } from "https://unpkg.com/petite-vue?module";
 
+import showFilters from "./comps/renderIsland.js";
+
+showFilters();
+
 import fetchedFonts from "./apiFonts.js";
 import { _showItemsWithFadeIn } from "./comps/renderFonts.js";
 import { _paginate, _pagBtnHandler } from "./comps/pagHandler.js";
@@ -32,6 +36,7 @@ import _updateUrl from "./comps/updateUrl.js";
 import _readUrl from "./comps/readUrl.js";
 import _filterFonts from "./comps/filterFonts.js";
 import _pausePromoSection from "./comps/promo-section.js";
+import _handleMouseOverFont from "./comps/handleMouseOverFont.js";
 
 import { list, resetBtn, itemsPerPage, allCheckboxes } from "./globalVars.js";
 
@@ -64,6 +69,7 @@ export class App {
     this._filterFonts = _filterFonts;
     this._pausePromoSection = _pausePromoSection;
     this._setClicks = this._setClicks.bind(this);
+    this._handleMouseOverFont = _handleMouseOverFont;
 
     this.store = store;
     this.counter = counter;
@@ -105,7 +111,10 @@ export class App {
     const span2El = list.querySelectorAll(":nth-child(6n+3), :nth-child(6n+4)");
 
     if (viewList === "grid") {
-      fontItem.forEach((el) => el.classList.add("dyn-style-0"));
+      fontItem.forEach((el) => {
+        el.classList.add("dyn-style-0");
+      });
+
       span2El.forEach((element) => {
         element.classList.remove("dyn-style-2");
         element.classList.remove("dyn-style-1");
@@ -131,12 +140,12 @@ export class App {
       });
     }
 
+    this._handleMouseOverFont(fontItem);
     nextTick(() => {
       if (viewList === "grid" || viewList === "columns") {
         this.store.listType = false;
       } else this.store.listType = true;
       this._showItemsWithFadeIn();
-      // this.store.counter = fonts.length;
     });
   }
 }
@@ -148,7 +157,6 @@ const createFontsList = function (fonts) {
     fonts: fonts.slice(0, 5),
     counter: 0,
     listType: true,
-
     clicks: [0, 0, 0, 0, 0, 0, 0, 0, 0],
     divIndex: 0,
     allFiltersFromThisCat: [],
@@ -157,6 +165,7 @@ const createFontsList = function (fonts) {
 
   createApp({
     store,
+
     handleClick(event) {
       this.store.divIndex = parseInt(event.target.getAttribute("data-atr"));
       this.store.divPos = parseInt(event.target.getAttribute("data-pos"));
@@ -220,6 +229,19 @@ const createFontsList = function (fonts) {
       }
       event.target.classList.remove("hover-blue");
     },
+
+    handleMouseOverFont(event) {
+      event.target.querySelectorAll(".save_button_wrapper").forEach((el) => {
+        el.classList.add("visiblefade");
+      });
+    },
+
+    handleMouseLeaveFont(event) {
+      event.target.querySelectorAll(".save_button_wrapper").forEach((el) => {
+        el.classList.remove("visiblefade");
+      });
+    },
+
     updateList: new App(store),
   }).mount("#app");
 };

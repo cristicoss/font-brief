@@ -122,3 +122,42 @@
   animation: moveStripe2 35s linear infinite;
   animation-timing-function: linear;
 }
+
+/* Initial state: invisible and fully transparent */
+.invisible-fade {
+  opacity: 0;
+  transition: opacity 0.2s ease-out; /* Smooth transition for fade-out */
+}
+
+/* Fade-in effect using keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Visible-fade class to apply the fade-in effect */
+.visiblefade {
+  animation: fadeIn 0.2s ease-out forwards; /* 'forwards' keeps the element visible after animation ends */
+}
+
+.fadein {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.fadeout {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.fadein.active {
+  opacity: 1;
+}
+
+.fadeout.active {
+  opacity: 0;
+}
