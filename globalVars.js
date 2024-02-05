@@ -1,4 +1,4 @@
-export const list = document.querySelector(".font-list_wrapper");
+export const list = document.querySelector(".font-items_wrapper");
 export const listTop = document.getElementById("list-top");
 export const loadingContainer = document.querySelector(".loading_image");
 export const pagContainer = document.querySelector(".pagination_container");
