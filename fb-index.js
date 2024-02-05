@@ -161,10 +161,82 @@ const createFontsList = function (fonts) {
     divIndex: 0,
     allFiltersFromThisCat: [],
     divPos: 0,
+
+    fontBGColor: "white-black",
+    fontFGColor: "",
+    imgColorOver: "normal",
   });
 
   createApp({
     store,
+
+    handleColor() {
+      const changeColors = function (bg, fg, img) {
+        store.fontBGColor = bg;
+        store.fontFGColor = fg;
+        store.imgColorOver = img;
+        return;
+      };
+
+      if (store.fontBGColor === "white-black") {
+        store.fontBGColor = "white-blue";
+        store.fontFGColor = "fg-blue";
+        store.imgColorOver = "normal";
+        return;
+      }
+
+      if (store.fontBGColor === "white-blue") {
+        store.fontBGColor = "white-red";
+        store.fontFGColor = "fg-red";
+        return;
+      }
+
+      if (store.fontBGColor === "white-red") {
+        store.fontBGColor = "yellow-black";
+        store.fontFGColor = "fg-transp";
+        store.imgColorOver = "multiply";
+        return;
+      }
+
+      if (store.fontBGColor === "yellow-black") {
+        store.fontBGColor = "blue-white";
+        store.fontFGColor = "fg-transp";
+        store.imgColorOver = "screen";
+        return;
+      }
+
+      if (store.fontBGColor === "blue-white") {
+        store.fontBGColor = "black-white";
+        store.fontFGColor = "fg-transp";
+        return;
+      }
+
+      if (store.fontBGColor === "black-white") {
+        store.fontBGColor = "green-black";
+        store.fontFGColor = "fg-transp";
+        store.imgColorOver = "multiply";
+        return;
+      }
+
+      if (store.fontBGColor === "green-black") {
+        store.fontBGColor = "pink-black";
+        store.fontFGColor = "fg-transp";
+        return;
+      }
+
+      if (store.fontBGColor === "pink-black") {
+        store.fontBGColor = "orange-black";
+        store.fontFGColor = "fg-transp";
+        return;
+      }
+
+      if (store.fontBGColor === "orange-black") {
+        store.fontBGColor = "white-black";
+        store.fontFGColor = "";
+        store.imgColorOver = "normal";
+        return;
+      }
+    },
 
     handleClick(event) {
       this.store.divIndex = parseInt(event.target.getAttribute("data-atr"));
