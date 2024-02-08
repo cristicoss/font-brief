@@ -209,3 +209,7 @@ input[type="range"]::-moz-range-track {
   background: #4a4a4a;
   height: 1px;
 }
+
+.v-cloak {
+  display: none;
+}

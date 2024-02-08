@@ -38,7 +38,14 @@ import _filterFonts from "./comps/filterFonts.js";
 import _pausePromoSection from "./comps/promo-section.js";
 import _handleMouseOverFont from "./comps/handleMouseOverFont.js";
 
-import { list, resetBtn, itemsPerPage, allCheckboxes } from "./globalVars.js";
+import {
+  list,
+  resetBtn,
+  itemsPerPage,
+  allCheckboxes,
+  fontImage,
+  fontImageCrop,
+} from "./globalVars.js";
 
 let loadedFonts = [];
 
@@ -165,10 +172,21 @@ const createFontsList = function (fonts) {
     fontBGColor: "white-black",
     fontFGColor: "",
     imgColorOver: "normal",
+
+    sliderValue: 80,
   });
 
   createApp({
     store,
+
+    handleFontSize() {
+      fontImage.forEach((el) => {
+        console.log(el);
+
+        el.style.height = `${store.sliderValue}%`;
+      });
+      // fontImageCrop.style.height = `${store.sliderValue}rem`;
+    },
 
     handleColor() {
       const changeColors = function (bg, fg, img) {

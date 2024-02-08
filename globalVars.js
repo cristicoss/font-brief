@@ -16,3 +16,6 @@ export const checkboxesContainer = document.querySelectorAll(
 );
 
 export const fontItem = document.querySelectorAll(".font-list_item");
+
+export const fontImage = document.querySelectorAll(".font_image");
+export const fontImageCrop = document.querySelector(".font_image-crop");
