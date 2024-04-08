@@ -112,8 +112,9 @@ export class App {
 
   ////// Render list of fonts /////
   ////// Don't move it in a separate file, it work with a delay /////
-  async _renderFonts(fonts, itemsPerPage) {
+  _renderFonts(fonts, itemsPerPage) {
     this.store.fonts = fonts.slice(0, itemsPerPage);
+
     const fontItem = document.querySelectorAll(".font-list_item");
     const span2El = list.querySelectorAll(":nth-child(6n+3), :nth-child(6n+4)");
 
@@ -174,6 +175,8 @@ const createFontsList = function (fonts) {
     imgColorOver: "normal",
 
     sliderValue: 80,
+
+    subscribed: false,
   });
 
   createApp({
@@ -330,6 +333,14 @@ const createFontsList = function (fonts) {
       event.target.querySelectorAll(".save_button_wrapper").forEach((el) => {
         el.classList.remove("visiblefade");
       });
+    },
+
+    handleNewsletter() {
+      console.log("newsletter");
+      document
+        .querySelector(".newsletter_wrapper-fixed")
+        .classList.add("active");
+      this.store.subscribed = true;
     },
 
     updateList: new App(store),

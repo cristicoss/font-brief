@@ -7,6 +7,39 @@
   }
 }
 
+/* ANIMATION PROMO STRIPES*/
+@keyframes marquee-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.promo-font-2_wrapper {
+  animation: marquee-left 35s linear infinite;
+}
+
+.promo-font_wrapper {
+  animation: marquee-right 35s linear infinite;
+}
+
+.paused {
+  animation-play-state: paused; /* Pauses the animation */
+}
+
+/* ANIMATION FONT LIST RENDER*/
+
 @keyframes pulsate {
   0% {
     opacity: 0; /* Initial opacity */
@@ -32,95 +65,6 @@
 .font-list_item.visible {
   opacity: 1;
   transform: translateY(0px);
-}
-
-.promo-font_wrapper.a {
-  animation: moveStripe1 35s linear infinite;
-  animation-timing-function: linear;
-}
-.promo-font_wrapper.b {
-  animation: moveStripe2 35s linear infinite;
-  animation-timing-function: linear;
-}
-.promo-font_wrapper.c {
-  animation: moveStripe3 35s linear infinite;
-  animation-timing-function: linear;
-}
-
-@keyframes moveStripe1 {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-@keyframes moveStripe2 {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-@keyframes moveStripe3 {
-  0% {
-    transform: translateX(200%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-.promo-font-2_wrapper.a {
-  animation: moveStripe4 35s linear infinite;
-  animation-timing-function: linear;
-}
-.promo-font-2_wrapper.b {
-  animation: moveStripe5 35s linear infinite;
-  animation-timing-function: linear;
-}
-.promo-font-2_wrapper.c {
-  animation: moveStripe6 35s linear infinite;
-  animation-timing-function: linear;
-}
-
-@keyframes moveStripe4 {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-@keyframes moveStripe5 {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-@keyframes moveStripe6 {
-  0% {
-    transform: translateX(-200%);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
-
-.sponsor-stripe_text.a {
-  animation: moveStripe1 35s linear infinite;
-  animation-timing-function: linear;
-}
-.sponsor-stripe_text.b {
-  animation: moveStripe2 35s linear infinite;
-  animation-timing-function: linear;
-}
-.sponsor-stripe_text.c {
-  animation: moveStripe2 35s linear infinite;
-  animation-timing-function: linear;
 }
 
 /* Initial state: invisible and fully transparent */

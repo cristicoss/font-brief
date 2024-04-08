@@ -10,27 +10,23 @@ const filterContainer = document.querySelectorAll(".filter_container");
 console.log(filterContainer);
 
 export default function showFilters() {
-  setTimeout(() => {
-    fbTitleLogo.classList.add("active");
-    fbTitle.classList.add("active");
-  }, 2000);
+  fbTitleLogo.classList.add("active");
+  fbTitle.classList.add("active");
 
-  setTimeout(() => {
+  requestAnimationFrame(() => {
     fbTitle.classList.add("hidden");
     filterAttContainer.classList.remove("hidden");
-    filterAttContainer.classList.add("active"); // Delay each item's appearance by 100ms
+    filterAttContainer.classList.add("active");
     filterSecondaryContainer.classList.remove("hidden");
 
-    filterContainer.forEach((item) => {
-      const atr = item.dataset.fadeNr;
+    filterContainer.forEach((item, index) => {
       setTimeout(() => {
         item.classList.add("active");
-        console.log(atr);
-      }, +atr * 100);
+      }, index * 100);
     });
-  }, 2400);
+  });
 
-  setTimeout(() => {
+  requestAnimationFrame(() => {
     filterSecondaryContainer.classList.add("active");
-  }, 3000);
+  });
 }
