@@ -7,7 +7,6 @@ const filterSecondaryContainer = document.querySelector(
   ".filters_secondary-container"
 );
 const filterContainer = document.querySelectorAll(".filter_container");
-console.log(filterContainer);
 
 export default function showFilters() {
   fbTitleLogo.classList.add("active");

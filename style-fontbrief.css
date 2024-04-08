@@ -7,7 +7,7 @@
   }
 }
 
-/* ANIMATION PROMO STRIPES*/
+/* ///////// ANIMATION PROMO STRIPES /////////// */
 @keyframes marquee-left {
   0% {
     transform: translateX(0%);
@@ -34,12 +34,15 @@
   animation: marquee-right 35s linear infinite;
 }
 
+.sponsor-stripe_text {
+  animation: marquee-right 35s linear infinite;
+}
+
 .paused {
   animation-play-state: paused; /* Pauses the animation */
 }
 
-/* ANIMATION FONT LIST RENDER*/
-
+/* ////////// ANIMATION FONT LIST RENDER ////////////// */
 @keyframes pulsate {
   0% {
     opacity: 0; /* Initial opacity */
@@ -90,23 +93,28 @@
 
 .fadein {
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+  max-height: 0vh;
 }
 
 .fadeout {
   opacity: 1;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+  max-height: 100vh; /* Set max-height to 100 viewport height units */
 }
 
 .fadein.active {
   opacity: 1;
+  max-height: 100vh;
 }
 
 .fadeout.active {
   opacity: 0;
+  max-height: 0;
 }
 
-/* Style for input range that controls the size */
+/* ////////// Style for input range that controls the size //////// */
 
 /* General */
 input[type="range"] {

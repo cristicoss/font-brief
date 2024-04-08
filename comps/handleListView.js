@@ -1,7 +1,7 @@
 import { list, gridBtn, listBtn, columnsBtn } from "../globalVars.js";
-let viewList = "list";
+// let store.itemClass = "list";
 
-export function _handleListView() {
+export function _handleListView(store) {
   const secondThis = this;
 
   const changeView = function () {
@@ -9,14 +9,15 @@ export function _handleListView() {
   };
 
   gridBtn.addEventListener("click", function () {
+    console.log(store.itemClass);
     gridBtn.classList.add("clicked");
     columnsBtn.classList.remove("clicked");
     listBtn.classList.remove("clicked");
     list.classList.remove("columns");
     list.classList.remove("list");
     list.classList.add("grid");
-    viewList = "grid";
     changeView();
+    store.itemClass = "grid";
   });
 
   columnsBtn.addEventListener("click", function () {
@@ -25,8 +26,8 @@ export function _handleListView() {
     listBtn.classList.remove("clicked");
     list.classList.remove("grid");
     list.classList.add("columns");
-    viewList = "columns";
     changeView();
+    store.itemClass = "columns";
   });
 
   listBtn.addEventListener("click", function () {
@@ -35,9 +36,9 @@ export function _handleListView() {
     columnsBtn.classList.remove("clicked");
     list.classList.remove("columns");
     list.classList.remove("grid");
-    viewList = "list";
     changeView();
+    store.itemClass = "list";
   });
 }
 
-export { viewList };
+// export { viewList };

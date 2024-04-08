@@ -1,7 +1,6 @@
 import { allCheckboxes, allUncheck } from "../globalVars.js";
 
 export default function _updateFilters(params) {
-  console.log(params);
   let paramString = "";
 
   params.forEach((value, key) => {
