@@ -35,10 +35,7 @@ import _updateFilters from "./comps/updateFilterBtns.js";
 import _updateUrl from "./comps/updateUrl.js";
 import _readUrl from "./comps/readUrl.js";
 import _filterFonts from "./comps/filterFonts.js";
-import {
-  _pausePromoSection,
-  _displayPromotedFonts,
-} from "./comps/promo-section.js";
+import _pausePromoSection from "./comps/promo-section.js";
 
 import {
   list,
@@ -109,12 +106,10 @@ export class App {
     this._readUrl = _readUrl;
     this._filterFonts = _filterFonts;
     this._pausePromoSection = _pausePromoSection;
-    this._displayPromotedFonts = _displayPromotedFonts;
     this._setClicks = this._setClicks.bind(this);
 
     this.store = store;
     this.counter = counter;
-    this._displayPromotedFonts(store);
     this._pausePromoSection();
     this._checkUncheck();
 
@@ -158,8 +153,26 @@ export class App {
       ) {
         this.store.listType = false;
       } else this.store.listType = true;
+
+      const container = document.querySelector(".font-items_wrapper");
+
+      const children = Array.from(container.children);
+
+      // Call your function with the indexes of the rendered items
+      children.forEach((child, index) => {
+        resizeImgs(child, index);
+      });
+
       this._showItemsWithFadeIn();
     });
+
+    function resizeImgs(child, index) {
+      const img = child.querySelector(".font_image-crop");
+
+      if (!img) return;
+
+      const { width, height } = img.getBoundingClientRect();
+    }
   }
 }
 
@@ -205,10 +218,14 @@ const createFontsList = function (fonts) {
       } else return "";
     },
 
+    resizeImgs(event, index) {
+      const image = event.target;
+      const { width, height } = image.getBoundingClientRect();
+      console.log(width, height);
+    },
+
     handleFontSize() {
       fontImage.forEach((el) => {
-        console.log(el);
-
         el.style.height = `${store.sliderValue}%`;
       });
       // fontImageCrop.style.height = `${store.sliderValue}rem`;
@@ -350,8 +367,6 @@ const createFontsList = function (fonts) {
       event.target.querySelectorAll(".save_button_wrapper").forEach((el) => {
         el.classList.add("visiblefade");
       });
-
-      console.log(index);
     },
 
     handleMouseLeaveFont(event) {

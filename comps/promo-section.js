@@ -1,10 +1,6 @@
 "use strict";
 
-export function _displayPromotedFonts(store) {
-  console.log(store.sortedFonts[0]);
-}
-
-export function _pausePromoSection() {
+export default function _pausePromoSection() {
   const observedSection = document.querySelector("#highlights");
   const promoRow = document.querySelectorAll(".promo-font_wrapper");
   const promoRow2 = document.querySelectorAll(".promo-font-2_wrapper");
