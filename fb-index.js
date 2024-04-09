@@ -24,7 +24,7 @@ import showFilters from "./comps/renderIsland.js";
 
 showFilters();
 
-import fetchedFonts from "./apiFonts.js";
+import { fetchedFonts, fetchedPromotedFonts } from "./apiFonts.js";
 import { _showItemsWithFadeIn } from "./comps/renderFonts.js";
 import { _paginate, _pagBtnHandler } from "./comps/pagHandler.js";
 import { _handleListView } from "./comps/handleListView.js";
@@ -35,7 +35,10 @@ import _updateFilters from "./comps/updateFilterBtns.js";
 import _updateUrl from "./comps/updateUrl.js";
 import _readUrl from "./comps/readUrl.js";
 import _filterFonts from "./comps/filterFonts.js";
-import _pausePromoSection from "./comps/promo-section.js";
+import {
+  _pausePromoSection,
+  _displayPromotedFonts,
+} from "./comps/promo-section.js";
 
 import {
   list,
@@ -47,12 +50,44 @@ import {
 } from "./globalVars.js";
 
 let loadedFonts = [];
+let promotedFontsIds = [];
 
 (async function () {
   try {
     const data = await fetchedFonts;
+    const dataPromoted = await fetchedPromotedFonts;
     loadedFonts.push(...data);
-    createFontsList(loadedFonts);
+    dataPromoted.forEach((el) => promotedFontsIds.push(el.id));
+
+    ///// create font list with promo first followed by new fonts /////
+
+    const isPromoted = (font) => promotedFontsIds.includes(font.id);
+
+    // Separate promoted fonts from non-promoted fonts
+    const promotedFonts = loadedFonts.filter((font) => isPromoted(font));
+    const nonPromotedFonts = loadedFonts.filter((font) => !isPromoted(font));
+
+    // Sort non-promoted fonts by created_at in descending order
+    const sortedNonPromotedFonts = nonPromotedFonts.sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    );
+
+    // Insert promoted fonts at the 3rd and 4th positions
+    const sortedFonts = [
+      ...sortedNonPromotedFonts.slice(0, 2), // First two non-promoted fonts
+      ...promotedFonts, // Promoted fonts
+      ...sortedNonPromotedFonts.slice(2), // Remaining non-promoted fonts
+    ];
+    // end //
+
+    sortedFonts[0].new = true;
+    sortedFonts[1].new = true;
+    sortedFonts[2].promoted = true;
+    sortedFonts[3].promoted = true;
+    sortedFonts[4].new = true;
+    sortedFonts[5].new = true;
+
+    createFontsList(sortedFonts);
   } catch (error) {
     console.error("Error while fetching fonts data:", error);
   }
@@ -74,11 +109,12 @@ export class App {
     this._readUrl = _readUrl;
     this._filterFonts = _filterFonts;
     this._pausePromoSection = _pausePromoSection;
+    this._displayPromotedFonts = _displayPromotedFonts;
     this._setClicks = this._setClicks.bind(this);
 
     this.store = store;
     this.counter = counter;
-
+    this._displayPromotedFonts(store);
     this._pausePromoSection();
     this._checkUncheck();
 
@@ -130,7 +166,7 @@ export class App {
 const createFontsList = function (fonts) {
   //Petie Vue
   const store = reactive({
-    loadedFonts: fonts,
+    sortedFonts: fonts,
     fonts: fonts.slice(0, 5),
     counter: 0,
     listType: true,

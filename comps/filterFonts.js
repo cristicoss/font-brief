@@ -35,7 +35,7 @@ export default function _filterFonts(urlParams) {
 
   let pag = urlParams.get("pag") ? +urlParams.get("pag") : 1;
 
-  const filteredFonts = this.store.loadedFonts.filter(
+  const filteredFonts = this.store.sortedFonts.filter(
     (font) =>
       elgnt.some((substring) => font.elegant.includes(substring)) &&
       expr.some((substring) => font.expressive.includes(substring)) &&
@@ -119,10 +119,10 @@ export default function _filterFonts(str) {
       : "8a8i8o8m8j"
     ).match(/.{1,2}/g) || [];
 
-  // this.store.loadedFonts.forEach((font) => {
+  // this.store.sortedFonts.forEach((font) => {
   //   console.log(font.expressive);
   // });
-  const filteredFonts = this.store.loadedFonts.filter(
+  const filteredFonts = this.store.sortedFonts.filter(
     (font) =>
       elgnt.some((substring) => font.elegant.includes(substring)) &&
       expr.some((substring) => font.expressive.includes(substring)) &&
