@@ -147,12 +147,19 @@ export class App {
     const fontItem = document.querySelectorAll(".font-list_item");
 
     nextTick(() => {
-      if (
-        this.store.itemClass === "grid" ||
-        this.store.itemClass === "columns"
-      ) {
+      if (this.store.itemFlex === "grid") {
+        this.store.gridType = true;
         this.store.listType = false;
-      } else this.store.listType = true;
+        this.store.columnType = false;
+      } else if (this.store.itemFlex === "list") {
+        this.store.gridType = false;
+        this.store.columnType = false;
+        this.store.listType = true;
+      } else {
+        this.store.gridType = false;
+        this.store.listType = false;
+        this.store.columnType = true;
+      }
 
       const container = document.querySelector(".font-items_wrapper");
 
@@ -182,7 +189,9 @@ const createFontsList = function (fonts) {
     sortedFonts: fonts,
     fonts: fonts.slice(0, 5),
     counter: 0,
-    listType: true,
+    listType: false,
+    gridType: true,
+    columnType: false,
     clicks: [0, 0, 0, 0, 0, 0, 0, 0, 0],
     divIndex: 0,
     allFiltersFromThisCat: [],
@@ -192,11 +201,12 @@ const createFontsList = function (fonts) {
     fontFGColor: "",
     imgColorOver: "normal",
 
-    sliderValue: 80,
+    sliderValue: 100,
 
     subscribed: false,
 
-    itemClass: "grid",
+    itemFlex: "grid",
+    imgSize: "",
   });
 
   createApp({
@@ -204,29 +214,65 @@ const createFontsList = function (fonts) {
 
     match(index) {
       if (
-        store.itemClass === "grid" &&
+        store.itemFlex === "grid" &&
         ((index - 2) % 6 === 0 || (index - 2) % 6 === 1)
       ) {
         return "dyn-style-2";
       } else if (
-        store.itemClass === "grid" &&
+        store.itemFlex === "grid" &&
         ((index - 2) % 6 !== 0 || (index - 2) % 6 !== 1)
       ) {
         return "dyn-style-0";
-      } else if (store.itemClass === "columns") {
+      } else if (store.itemFlex === "columns") {
         return "dyn-style-1";
       } else return "";
     },
 
+    //// aici am ramas ///
+
     resizeImgs(event, index) {
       const image = event.target;
-      const { width, height } = image.getBoundingClientRect();
-      console.log(width, height);
+      if (image) {
+        const { width, height } = image.getBoundingClientRect();
+        console.log(image, width / height);
+
+        // Traverse up the DOM tree to find the parent div with class "dyn-style-2"
+        let parentDiv = image.parentElement;
+
+        while (parentDiv) {
+          if ((store.imageFlex = "columns")) {
+            if (width / height < 2.3) {
+              image.classList.add("title-img-portrait-column");
+            } else image.classList.add("title-img-landscape-column");
+          }
+
+          if (image.classList.contains("dyn-style-2")) {
+            if (width / height < 2.3) {
+              image.classList.add("title-img-portrait-big");
+            } else if (width / height < 5) {
+              image.classList.add("title-img-landscape-big");
+            } else if (width / height >= 5) {
+              image.classList.add("title-img-extreme-landscape-big");
+            }
+          }
+
+          if (parentDiv.classList.contains("dyn-style-0")) {
+            if (width / height < 2.3) {
+              image.classList.add("title-img-portrait-small");
+            } else {
+              image.classList.add("title-img-landscape-small");
+            }
+          }
+
+          parentDiv = parentDiv.parentElement;
+        }
+      }
     },
 
     handleFontSize() {
       fontImage.forEach((el) => {
-        el.style.height = `${store.sliderValue}%`;
+        const { width, height } = el.getBoundingClientRect();
+        el.style.height = height - store.sliderValue + "px";
       });
       // fontImageCrop.style.height = `${store.sliderValue}rem`;
     },

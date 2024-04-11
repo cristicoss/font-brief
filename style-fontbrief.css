@@ -7,6 +7,43 @@
   }
 }
 
+.font_image-crop.title-img-portrait-big {
+  height: 70%;
+}
+
+.font_image-crop.title-img-portrait-small {
+  height: 40%;
+}
+
+.font_image-crop.title-img-extreme-landscape-big {
+  width: 90%;
+}
+
+.font_image-crop.title-img-landscape-big {
+  width: 80%;
+}
+
+.font_image-crop.title-img-landscape-small {
+  height: 15%;
+}
+
+.font_image-crop.title-img-extreme-landscape-small {
+  width: 90%;
+}
+
+.font_image-columns.title-img-portrait-column {
+  height: 70%;
+}
+
+.font_image-columns.title-img-landscape-column {
+  height: 30%;
+  width: 80%;
+}
+
+.font_image-columns.title-img-extreme-landscape-column {
+  width: 80%;
+}
+
 /* ///////// ANIMATION PROMO STRIPES /////////// */
 @keyframes marquee-left {
   0% {

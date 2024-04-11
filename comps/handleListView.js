@@ -9,7 +9,6 @@ export function _handleListView(store) {
   };
 
   gridBtn.addEventListener("click", function () {
-    console.log(store.itemClass);
     gridBtn.classList.add("clicked");
     columnsBtn.classList.remove("clicked");
     listBtn.classList.remove("clicked");
@@ -17,7 +16,7 @@ export function _handleListView(store) {
     list.classList.remove("list");
     list.classList.add("grid");
     changeView();
-    store.itemClass = "grid";
+    store.itemFlex = "grid";
   });
 
   columnsBtn.addEventListener("click", function () {
@@ -27,7 +26,7 @@ export function _handleListView(store) {
     list.classList.remove("grid");
     list.classList.add("columns");
     changeView();
-    store.itemClass = "columns";
+    store.itemFlex = "columns";
   });
 
   listBtn.addEventListener("click", function () {
@@ -37,7 +36,7 @@ export function _handleListView(store) {
     list.classList.remove("columns");
     list.classList.remove("grid");
     changeView();
-    store.itemClass = "list";
+    store.itemFlex = "list";
   });
 }
 
