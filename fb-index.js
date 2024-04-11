@@ -36,13 +36,13 @@ import _updateUrl from "./comps/updateUrl.js";
 import _readUrl from "./comps/readUrl.js";
 import _filterFonts from "./comps/filterFonts.js";
 import _pausePromoSection from "./comps/promo-section.js";
+import _newsletter from "./handleNewsletter.js";
 
 import {
   list,
   resetBtn,
   itemsPerPage,
   allCheckboxes,
-  fontImage,
   fontImageCrop,
 } from "./globalVars.js";
 
@@ -107,6 +107,7 @@ export class App {
     this._filterFonts = _filterFonts;
     this._pausePromoSection = _pausePromoSection;
     this._setClicks = this._setClicks.bind(this);
+    this._handleNewsletter = _newsletter;
 
     this.store = store;
     this.counter = counter;
@@ -122,6 +123,7 @@ export class App {
     this._setClicks();
 
     this._handleListView(store);
+    this._handleNewsletter();
   }
 
   _setClicks() {
@@ -187,14 +189,13 @@ const createFontsList = function (fonts) {
 
         // Traverse up the DOM tree to find the parent div with class "dyn-style-2"
         let parentDiv = image.parentElement;
+        const { width, height } = image.getBoundingClientRect();
 
         while (parentDiv) {
           if (parentDiv.classList.contains("dyn-style-2")) {
-            const { width, height } = image.getBoundingClientRect();
-
             if (width / height < 2.3) {
               image.classList.add("title-img-portrait-big");
-            } else if (width / height < 5) {
+            } else if (width / height < 5 && width / height >= 2.3) {
               image.classList.add("title-img-landscape-big");
             } else if (width / height >= 5) {
               image.classList.add("title-img-extreme-landscape-big");
@@ -202,26 +203,33 @@ const createFontsList = function (fonts) {
           }
 
           if (parentDiv.classList.contains("dyn-style-0")) {
-            const { width, height } = image.getBoundingClientRect();
-            if (width / height < 2.3) {
+            if (width / height < 2) {
               image.classList.add("title-img-portrait-small");
-            } else {
+            } else if (width / height >= 2) {
               image.classList.add("title-img-landscape-small");
             }
           }
 
           if (parentDiv.classList.contains("dyn-style-1")) {
-            const { width, height } = image.getBoundingClientRect();
             if (width / height < 2.5) {
               image.classList.add("title-img-portrait-column");
-            } else if (width / height < 7) {
+            } else if (width / height < 7 && width / height >= 2.5) {
               image.classList.add("title-img-landscape-column");
             } else if (width / height >= 7) {
               image.classList.add("title-img-extreme-landscape-column");
             }
           }
 
-          console.log(image.classList.value);
+          if (parentDiv.classList.contains("dyn-style-3")) {
+            if (width / height < 1.7) {
+              image.classList.add("title-img-portrait-list");
+            }
+            if (width / height < 2.5 && width / height >= 1.7) {
+              image.classList.add("title-img-portrait2-list");
+            } else if (width / height >= 2.5) {
+              image.classList.add("title-img-landscape-list");
+            }
+          }
 
           parentDiv = parentDiv.parentElement;
         }
@@ -269,39 +277,17 @@ const createFontsList = function (fonts) {
         return "dyn-style-0";
       } else if (store.itemFlex === "columns") {
         return "dyn-style-1";
-      } else return "";
-    },
-
-    //// aici am ramas ///
-
-    resizeColumnImgs(event, index) {
-      const image = event.target;
-      if (image) {
-        const { width, height } = image.getBoundingClientRect();
-
-        // Traverse up the DOM tree to find the parent div with class "dyn-style-2"
-        let parentDiv = image.parentElement;
-
-        while (parentDiv) {
-          if (width / height < 2.5) {
-            image.classList.add("title-img-portrait-column");
-          } else if (width / height < 5) {
-            image.classList.add("title-img-landscape-column");
-          } else if (width / height >= 5) {
-            image.classList.add("title-img-extreme-landscape-column");
-          }
-
-          parentDiv = parentDiv.parentElement;
-        }
-      }
+      } else return "dyn-style-3";
     },
 
     handleFontSize() {
+      const fontImage = document.querySelectorAll(".font_image-crop");
+      console.log(store.sliderValue);
+
       fontImage.forEach((el) => {
         const { width, height } = el.getBoundingClientRect();
-        el.style.height = height - store.sliderValue + "px";
+        el.style.height = store.sliderValue + "%";
       });
-      // fontImageCrop.style.height = `${store.sliderValue}rem`;
     },
 
     handleColor() {
