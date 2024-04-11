@@ -8,7 +8,7 @@
 }
 
 .font_image-crop.title-img-portrait-big {
-  height: 70%;
+  height: 65%;
 }
 
 .font_image-crop.title-img-portrait-small {
@@ -31,17 +31,17 @@
   width: 90%;
 }
 
-.font_image-columns.title-img-portrait-column {
-  height: 70%;
+.font_image-crop.title-img-portrait-column {
+  height: 55%;
 }
 
-.font_image-columns.title-img-landscape-column {
+.font_image-crop.title-img-landscape-column {
   height: 30%;
-  width: 80%;
+  width: 65%;
 }
 
-.font_image-columns.title-img-extreme-landscape-column {
-  width: 80%;
+.font_image-crop.title-img-extreme-landscape-column {
+  width: 75%;
 }
 
 /* ///////// ANIMATION PROMO STRIPES /////////// */

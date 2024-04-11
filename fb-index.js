@@ -155,31 +155,14 @@ export class App {
         this.store.gridType = false;
         this.store.columnType = false;
         this.store.listType = true;
-      } else {
+      } else if (this.store.itemFlex === "columns") {
         this.store.gridType = false;
         this.store.listType = false;
         this.store.columnType = true;
       }
 
-      const container = document.querySelector(".font-items_wrapper");
-
-      const children = Array.from(container.children);
-
-      // Call your function with the indexes of the rendered items
-      children.forEach((child, index) => {
-        resizeImgs(child, index);
-      });
-
       this._showItemsWithFadeIn();
     });
-
-    function resizeImgs(child, index) {
-      const img = child.querySelector(".font_image-crop");
-
-      if (!img) return;
-
-      const { width, height } = img.getBoundingClientRect();
-    }
   }
 }
 
@@ -192,6 +175,67 @@ const createFontsList = function (fonts) {
     listType: false,
     gridType: true,
     columnType: false,
+
+    resizeGridImgs(event, img) {
+      if (event || img) {
+        const image = event.target || img;
+        const classes = image.className.split(" ");
+        if (classes.length > 1) {
+          // Keep the first class and remove all other classes
+          image.className = classes[0];
+        }
+
+        // Traverse up the DOM tree to find the parent div with class "dyn-style-2"
+        let parentDiv = image.parentElement;
+
+        while (parentDiv) {
+          if (parentDiv.classList.contains("dyn-style-2")) {
+            const { width, height } = image.getBoundingClientRect();
+
+            if (width / height < 2.3) {
+              image.classList.add("title-img-portrait-big");
+            } else if (width / height < 5) {
+              image.classList.add("title-img-landscape-big");
+            } else if (width / height >= 5) {
+              image.classList.add("title-img-extreme-landscape-big");
+            }
+          }
+
+          if (parentDiv.classList.contains("dyn-style-0")) {
+            const { width, height } = image.getBoundingClientRect();
+            if (width / height < 2.3) {
+              image.classList.add("title-img-portrait-small");
+            } else {
+              image.classList.add("title-img-landscape-small");
+            }
+          }
+
+          if (parentDiv.classList.contains("dyn-style-1")) {
+            const { width, height } = image.getBoundingClientRect();
+            if (width / height < 2.5) {
+              image.classList.add("title-img-portrait-column");
+            } else if (width / height < 7) {
+              image.classList.add("title-img-landscape-column");
+            } else if (width / height >= 7) {
+              image.classList.add("title-img-extreme-landscape-column");
+            }
+          }
+
+          console.log(image.classList.value);
+
+          parentDiv = parentDiv.parentElement;
+        }
+      } else console.log("no image");
+    },
+
+    loadedImages: function () {
+      console.clear();
+      const loadedImgs = document.querySelectorAll(".font_image-crop");
+      loadedImgs.forEach((img) => {
+        this.resizeGridImgs(false, img);
+      });
+    },
+
     clicks: [0, 0, 0, 0, 0, 0, 0, 0, 0],
     divIndex: 0,
     allFiltersFromThisCat: [],
@@ -230,38 +274,21 @@ const createFontsList = function (fonts) {
 
     //// aici am ramas ///
 
-    resizeImgs(event, index) {
+    resizeColumnImgs(event, index) {
       const image = event.target;
       if (image) {
         const { width, height } = image.getBoundingClientRect();
-        console.log(image, width / height);
 
         // Traverse up the DOM tree to find the parent div with class "dyn-style-2"
         let parentDiv = image.parentElement;
 
         while (parentDiv) {
-          if ((store.imageFlex = "columns")) {
-            if (width / height < 2.3) {
-              image.classList.add("title-img-portrait-column");
-            } else image.classList.add("title-img-landscape-column");
-          }
-
-          if (image.classList.contains("dyn-style-2")) {
-            if (width / height < 2.3) {
-              image.classList.add("title-img-portrait-big");
-            } else if (width / height < 5) {
-              image.classList.add("title-img-landscape-big");
-            } else if (width / height >= 5) {
-              image.classList.add("title-img-extreme-landscape-big");
-            }
-          }
-
-          if (parentDiv.classList.contains("dyn-style-0")) {
-            if (width / height < 2.3) {
-              image.classList.add("title-img-portrait-small");
-            } else {
-              image.classList.add("title-img-landscape-small");
-            }
+          if (width / height < 2.5) {
+            image.classList.add("title-img-portrait-column");
+          } else if (width / height < 5) {
+            image.classList.add("title-img-landscape-column");
+          } else if (width / height >= 5) {
+            image.classList.add("title-img-extreme-landscape-column");
           }
 
           parentDiv = parentDiv.parentElement;
@@ -422,7 +449,6 @@ const createFontsList = function (fonts) {
     },
 
     handleNewsletter() {
-      console.log("newsletter");
       document
         .querySelector(".newsletter_wrapper-fixed")
         .classList.add("active");
