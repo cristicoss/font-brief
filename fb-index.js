@@ -19,7 +19,7 @@ import {
   createApp,
   reactive,
   nextTick,
-} from "./node_modules/petite-vue/dist/petite-vue.es.js";
+} from "./petite-vue/dist/petite-vue.es.js";
 
 // const { createApp, reactive, nextTick } = petite;
 
