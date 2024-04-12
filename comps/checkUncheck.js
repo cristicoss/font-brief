@@ -1,5 +1,4 @@
 import { checkboxesContainer } from "../globalVars.js";
-import { nextTick } from "https://unpkg.com/petite-vue?module";
 
 export default function _checkUncheck() {
   checkboxesContainer.forEach((check) => {

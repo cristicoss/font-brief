@@ -14,11 +14,14 @@
 //// Trebuie sa schimb # cu & in url
 
 "use strict";
+
 import {
   createApp,
   reactive,
   nextTick,
-} from "https://unpkg.com/petite-vue?module";
+} from "./node_modules/petite-vue/dist/petite-vue.es.js";
+
+// const { createApp, reactive, nextTick } = petite;
 
 import showFilters from "./comps/renderIsland.js";
 
@@ -253,7 +256,7 @@ const createFontsList = function (fonts) {
     fontFGColor: "",
     imgColorOver: "normal",
 
-    sliderValue: 100,
+    sliderValue: 0,
 
     subscribed: false,
 
@@ -280,13 +283,15 @@ const createFontsList = function (fonts) {
       } else return "dyn-style-3";
     },
 
-    handleFontSize() {
+    handleFontSize(event) {
+      const sliderValue = event.target.value;
       const fontImage = document.querySelectorAll(".font_image-crop");
-      console.log(store.sliderValue);
 
       fontImage.forEach((el) => {
         const { width, height } = el.getBoundingClientRect();
-        el.style.height = store.sliderValue + "%";
+        const newHeight = height + (height * sliderValue) / 100;
+        console.log(newHeight);
+        el.style.height = `${sliderValue}%`;
       });
     },
 

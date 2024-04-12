@@ -1,5 +1,4 @@
 import { loadingContainer, list } from "../globalVars.js";
-import { nextTick } from "https://unpkg.com/petite-vue?module";
 
 export function _showItemsWithFadeIn() {
   const fontItem = document.querySelectorAll(".font-list_item");
