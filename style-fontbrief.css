@@ -6,6 +6,9 @@
     grid-row-end: span 1;
   }
 }
+.ease-all {
+  transition: all 0.3s ease;
+}
 
 .font_image-crop.title-img-portrait-big {
   height: 75%;

@@ -256,6 +256,62 @@ const createFontsList = function (fonts) {
     fontFGColor: "",
     imgColorOver: "normal",
 
+    stylesIndex: 0,
+    styles: [
+      {
+        bgColor: "white",
+        infoColor: "text_dark-grey",
+      },
+      {
+        bgColor: "white",
+        fgColor: "blue",
+        infoColor: "text_dark-grey",
+      },
+      {
+        bgColor: "white",
+        fgColor: "red",
+        infoColor: "text_dark-grey",
+      },
+      {
+        bgColor: "yellow",
+        fontBlend: "multiply",
+        infoColor: "text_dark-grey",
+      },
+      {
+        bgColor: "blue",
+        fontBlend: "invert",
+        infoColor: "text_light-grey",
+        newLabel: "white",
+        promoLabel: "white",
+        saveColor: "white",
+      },
+      {
+        bgColor: "black",
+        fontBlend: "invert",
+        infoColor: "text_light-grey",
+        newLabel: "white",
+        promoLabel: "white",
+      },
+      {
+        bgColor: "green",
+        fontBlend: "multiply",
+        infoColor: "text_dark-grey",
+        strokeColor: "light-stroke",
+      },
+      {
+        bgColor: "pink",
+        fontBlend: "multiply",
+        infoColor: "text_dark-grey",
+        strokeColor: "light-stroke",
+      },
+      {
+        bgColor: "orange",
+        fontBlend: "multiply",
+        infoColor: "text_dark-grey",
+        strokeColor: "light-stroke",
+      },
+    ],
+
     sliderValue: 0,
 
     subscribed: false,
@@ -295,72 +351,12 @@ const createFontsList = function (fonts) {
       });
     },
 
-    handleColor() {
-      const changeColors = function (bg, fg, img) {
-        store.fontBGColor = bg;
-        store.fontFGColor = fg;
-        store.imgColorOver = img;
-        return;
-      };
+    handleColor(event) {
+      if (!event) return store.styles[0];
 
-      if (store.fontBGColor === "white-black") {
-        store.fontBGColor = "white-blue";
-        store.fontFGColor = "fg-blue";
-        store.imgColorOver = "normal";
-        return;
-      }
-
-      if (store.fontBGColor === "white-blue") {
-        store.fontBGColor = "white-red";
-        store.fontFGColor = "fg-red";
-        return;
-      }
-
-      if (store.fontBGColor === "white-red") {
-        store.fontBGColor = "yellow-black";
-        store.fontFGColor = "fg-transp";
-        store.imgColorOver = "multiply";
-        return;
-      }
-
-      if (store.fontBGColor === "yellow-black") {
-        store.fontBGColor = "blue-white";
-        store.fontFGColor = "fg-transp";
-        store.imgColorOver = "screen";
-        return;
-      }
-
-      if (store.fontBGColor === "blue-white") {
-        store.fontBGColor = "black-white";
-        store.fontFGColor = "fg-transp";
-        return;
-      }
-
-      if (store.fontBGColor === "black-white") {
-        store.fontBGColor = "green-black";
-        store.fontFGColor = "fg-transp";
-        store.imgColorOver = "multiply";
-        return;
-      }
-
-      if (store.fontBGColor === "green-black") {
-        store.fontBGColor = "pink-black";
-        store.fontFGColor = "fg-transp";
-        return;
-      }
-
-      if (store.fontBGColor === "pink-black") {
-        store.fontBGColor = "orange-black";
-        store.fontFGColor = "fg-transp";
-        return;
-      }
-
-      if (store.fontBGColor === "orange-black") {
-        store.fontBGColor = "white-black";
-        store.fontFGColor = "";
-        store.imgColorOver = "normal";
-        return;
-      }
+      store.stylesIndex++;
+      if (store.stylesIndex >= store.styles.length) store.stylesIndex = 0;
+      return store.stylesIndex;
     },
 
     handleClick(event) {
