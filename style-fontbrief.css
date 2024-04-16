@@ -10,55 +10,8 @@
   transition: all 0.3s ease;
 }
 
-.font_image-crop.title-img-portrait-big {
-  height: 75%;
-}
-
-.font_image-crop.title-img-portrait-small {
-  height: 45%;
-}
-
-.font_image-crop.title-img-extreme-landscape-big {
-  width: 85%;
-}
-
-.font_image-crop.title-img-landscape-big {
-  width: 75%;
-  max-width: 90%;
-}
-
-.font_image-crop.title-img-landscape-small {
-  height: 15%;
-  max-width: 90%;
-}
-
-.font_image-crop.title-img-extreme-landscape-small {
-  width: 90%;
-}
-
-.font_image-crop.title-img-portrait-column {
-  height: 55%;
-}
-
-.font_image-crop.title-img-landscape-column {
-  height: 30%;
-  width: 90%;
-}
-
-.font_image-crop.title-img-extreme-landscape-column {
-  width: 75%;
-}
-
-.font_image-crop.title-img-landscape-list {
-  height: 5rem;
-}
-
-.font_image-crop.title-img-portrait-list {
-  height: 15rem;
-}
-
-.font_image-crop.title-img-portrait2-list {
-  height: 10rem;
+.ease-fast {
+  transition: all 0.005s ease;
 }
 
 /* ///////// ANIMATION PROMO STRIPES /////////// */

@@ -181,8 +181,9 @@ const createFontsList = function (fonts) {
     gridType: true,
     columnType: false,
 
-    sliderValue: 100,
+    sliderValue: 90,
 
+    /*
     resizeGridImgs(event, img) {
       if (event || img) {
         const image = event.target || img;
@@ -238,14 +239,211 @@ const createFontsList = function (fonts) {
         //   +image.dataset.initialHeight + this.sliderValue + "px";
       } else console.log("no image");
     },
+    */
 
-    loadedImages: function () {
+    /*
+    loadedImages() {
       console.clear();
+
       const loadedImgs = document.querySelectorAll(".font_image-crop");
       loadedImgs.forEach((img) => {
-        this.resizeGridImgs(false, img);
-        // img.dataset.initialHeight = "";
+        const imgWidth = img.width;
+        const imgHeight = img.height;
+        const aspectRatio = imgWidth / imgHeight;
+
+        var maxHeightPercent = 90; // 90% of container height
+        var maxWidthPercent = 90; // 90% of container width
+
+        // Calculate the proportional height and width within bounds
+        var proportionalHeightPercent, proportionalWidthPercent;
+
+        let parent = img.parentNode;
+        while (parent) {
+          if (parent.classList && parent.classList.contains("dyn-style-2")) {
+            if (imgHeight > imgWidth) {
+              proportionalHeightPercent =
+                Math.min(store.sliderValue, 100) / 1.5;
+              proportionalWidthPercent =
+                proportionalHeightPercent / aspectRatio;
+            } else {
+              proportionalWidthPercent = Math.min(store.sliderValue, 100) / 1.5;
+              proportionalHeightPercent =
+                proportionalWidthPercent * aspectRatio;
+            }
+            img.style.width = proportionalWidthPercent + "%";
+            img.style.height = proportionalHeightPercent + "%";
+            break;
+          }
+
+          if (parent.classList && parent.classList.contains("dyn-style-0")) {
+            if (imgHeight > imgWidth) {
+              proportionalHeightPercent = Math.min(store.sliderValue, 100) / 2;
+              proportionalWidthPercent =
+                proportionalHeightPercent / aspectRatio;
+            } else {
+              proportionalWidthPercent = Math.min(store.sliderValue, 100) / 2;
+              proportionalHeightPercent =
+                proportionalWidthPercent * aspectRatio;
+            }
+            img.style.width = proportionalWidthPercent + "%";
+            img.style.height = proportionalHeightPercent + "%";
+            break;
+          }
+
+          if (parent.classList && parent.classList.contains("dyn-style-1")) {
+            if (imgHeight > imgWidth) {
+              proportionalHeightPercent =
+                Math.min(store.sliderValue, 100) / 1.7;
+              proportionalWidthPercent =
+                proportionalHeightPercent / aspectRatio;
+            } else {
+              proportionalWidthPercent = Math.min(store.sliderValue, 100) / 1.7;
+              proportionalHeightPercent =
+                proportionalWidthPercent * aspectRatio;
+            }
+            img.style.width = proportionalWidthPercent + "%";
+            img.style.height = proportionalHeightPercent + "%";
+            break;
+          }
+
+          if (parent.classList && parent.classList.contains("dyn-style-3")) {
+            if (imgHeight > imgWidth) {
+              img.style.width = (imgWidth / imgHeight) * 20 + "rem";
+              proportionalHeightPercent =
+                proportionalWidthPercent * aspectRatio;
+            } else {
+              img.style.width = (imgWidth / imgHeight) * 6 + "rem";
+              if (imgWidth / imgHeight < 2.5 && imgWidth / imgHeight > 1) {
+                img.style.width = (imgWidth / imgHeight) * 10 + "rem";
+                proportionalHeightPercent =
+                  proportionalWidthPercent * aspectRatio;
+              }
+            }
+
+            break;
+          }
+
+          parent = parent.parentNode;
+        }
+        // this.resizeGridImgs(false, img);
+        console.log(img);
       });
+    },
+    */
+
+    throttle(func, limit) {
+      let inThrottle;
+      return function () {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+          func.apply(context, args);
+          inThrottle = true;
+          setTimeout(() => (inThrottle = false), limit);
+        }
+      };
+    },
+
+    resetSlider() {
+      store.sliderValue = 90;
+      store.loadImgs();
+    },
+
+    loadImgs(event) {
+      if (event) store.sliderValue = event.target.value;
+
+      const loadedImgs = document.querySelectorAll(".font_image-crop");
+      loadedImgs.forEach((img) => {
+        const imgWidth = img.width;
+        const imgHeight = img.height;
+        const aspectRatio = imgWidth / imgHeight;
+
+        var maxHeightPercent = 90; // 90% of container height
+        var maxWidthPercent = 90; // 90% of container width
+
+        // Calculate the proportional height and width within bounds
+        var proportionalHeightPercent, proportionalWidthPercent;
+
+        let parent = img.parentNode;
+        while (parent) {
+          if (parent.classList && parent.classList.contains("dyn-style-2")) {
+            if (imgHeight > imgWidth) {
+              proportionalHeightPercent =
+                Math.min(store.sliderValue, 100) / 1.5;
+              proportionalWidthPercent =
+                proportionalHeightPercent / aspectRatio;
+            } else {
+              proportionalWidthPercent = Math.min(store.sliderValue, 100) / 1.5;
+              proportionalHeightPercent =
+                proportionalWidthPercent * aspectRatio;
+            }
+            img.style.width = proportionalWidthPercent + "%";
+            img.style.height = proportionalHeightPercent + "%";
+            break;
+          }
+
+          if (parent.classList && parent.classList.contains("dyn-style-0")) {
+            if (imgHeight > imgWidth) {
+              proportionalHeightPercent =
+                Math.min(store.sliderValue, 100) / 1.3;
+              proportionalWidthPercent =
+                proportionalHeightPercent / aspectRatio;
+            } else {
+              proportionalWidthPercent = Math.min(store.sliderValue, 100) / 1.3;
+              proportionalHeightPercent =
+                proportionalWidthPercent * aspectRatio;
+            }
+            img.style.width = proportionalWidthPercent + "%";
+            img.style.height = proportionalHeightPercent + "%";
+            break;
+          }
+
+          if (parent.classList && parent.classList.contains("dyn-style-1")) {
+            if (imgHeight > imgWidth) {
+              proportionalHeightPercent =
+                Math.min(store.sliderValue, 100) / 1.7;
+              proportionalWidthPercent =
+                proportionalHeightPercent / aspectRatio;
+            } else {
+              proportionalWidthPercent = Math.min(store.sliderValue, 100) / 1.7;
+              proportionalHeightPercent =
+                proportionalWidthPercent * aspectRatio;
+            }
+            img.style.width = proportionalWidthPercent + "%";
+            img.style.height = proportionalHeightPercent + "%";
+            break;
+          }
+
+          if (parent.classList && parent.classList.contains("dyn-style-3")) {
+            if (imgHeight > imgWidth) {
+              img.style.width =
+                ((imgWidth / imgHeight) * 20 * store.sliderValue) / 100 + "rem";
+              proportionalHeightPercent =
+                proportionalWidthPercent * aspectRatio;
+            } else {
+              img.style.width =
+                ((imgWidth / imgHeight) * 6 * store.sliderValue) / 100 + "rem";
+              if (imgWidth / imgHeight < 2.5 && imgWidth / imgHeight > 1) {
+                img.style.width =
+                  ((imgWidth / imgHeight) * 10 * store.sliderValue) / 100 +
+                  "rem";
+                proportionalHeightPercent =
+                  proportionalWidthPercent * aspectRatio;
+              }
+            }
+
+            break;
+          }
+
+          parent = parent.parentNode;
+        }
+      });
+    },
+
+    handleFontSize(event) {
+      if (event) store.sliderValue = event.target.value;
+
+      store.loadImgs();
     },
 
     clicks: [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -342,6 +540,7 @@ const createFontsList = function (fonts) {
       if (store.itemFlex === "list") return "dyn-style-3";
     },
 
+    /*
     handleFontSize(event) {
       if (!event) store.sliderValue = 100;
 
@@ -481,6 +680,7 @@ const createFontsList = function (fonts) {
         }
       }
     },
+*/
 
     handleColor(event) {
       if (!event) return store.styles[0];
