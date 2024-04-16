@@ -24,10 +24,12 @@
 
 .font_image-crop.title-img-landscape-big {
   width: 75%;
+  max-width: 90%;
 }
 
 .font_image-crop.title-img-landscape-small {
   height: 15%;
+  max-width: 90%;
 }
 
 .font_image-crop.title-img-extreme-landscape-small {
@@ -40,7 +42,7 @@
 
 .font_image-crop.title-img-landscape-column {
   height: 30%;
-  width: 65%;
+  width: 90%;
 }
 
 .font_image-crop.title-img-extreme-landscape-column {

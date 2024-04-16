@@ -5,6 +5,7 @@ export function _handleListView(store) {
   const secondThis = this;
 
   const changeView = function () {
+    store.sliderValue = 100;
     secondThis._readUrl();
   };
 

@@ -181,6 +181,8 @@ const createFontsList = function (fonts) {
     gridType: true,
     columnType: false,
 
+    sliderValue: 100,
+
     resizeGridImgs(event, img) {
       if (event || img) {
         const image = event.target || img;
@@ -195,35 +197,15 @@ const createFontsList = function (fonts) {
         const { width, height } = image.getBoundingClientRect();
 
         while (parentDiv) {
-          if (parentDiv.classList.contains("dyn-style-2")) {
-            if (width / height < 2.3) {
-              image.classList.add("title-img-portrait-big");
-            } else if (width / height < 5 && width / height >= 2.3) {
-              image.classList.add("title-img-landscape-big");
-            } else if (width / height >= 5) {
-              image.classList.add("title-img-extreme-landscape-big");
-            }
-          }
-
-          if (parentDiv.classList.contains("dyn-style-0")) {
-            if (width / height < 2) {
-              image.classList.add("title-img-portrait-small");
-            } else if (width / height >= 2) {
-              image.classList.add("title-img-landscape-small");
-            }
-          }
-
           if (parentDiv.classList.contains("dyn-style-1")) {
+            console.log("dyn-style-1");
             if (width / height < 2.5) {
+              image.classList.remove("title-img-extreme-landscape-column");
               image.classList.add("title-img-portrait-column");
-            } else if (width / height < 7 && width / height >= 2.5) {
-              image.classList.add("title-img-landscape-column");
-            } else if (width / height >= 7) {
-              image.classList.add("title-img-extreme-landscape-column");
-            }
-          }
+            } else image.classList.add("title-img-landscape-column");
 
-          if (parentDiv.classList.contains("dyn-style-3")) {
+            // image.dataset.initialHeight = getComputedStyle(image).height;
+          } else if (parentDiv.classList.contains("dyn-style-3")) {
             if (width / height < 1.7) {
               image.classList.add("title-img-portrait-list");
             }
@@ -232,10 +214,28 @@ const createFontsList = function (fonts) {
             } else if (width / height >= 2.5) {
               image.classList.add("title-img-landscape-list");
             }
+            // image.dataset.initialHeight = getComputedStyle(image).height;
+          } else if (parentDiv.classList.contains("dyn-style-2")) {
+            if (width / height <= 2.3) {
+              image.classList.add("title-img-portrait-big");
+            } else image.classList.add("title-img-landscape-big");
+
+            // image.dataset.initialHeight = getComputedStyle(image).height;
+          }
+
+          if (parentDiv.classList.contains("dyn-style-0")) {
+            if (width / height < 2) {
+              image.classList.add("title-img-portrait-small");
+            } else if (width / height >= 2) {
+              image.classList.add("title-img-landscape-small");
+            }
+            // image.dataset.initialHeight = getComputedStyle(image).height;
           }
 
           parentDiv = parentDiv.parentElement;
         }
+        // image.style.height =
+        //   +image.dataset.initialHeight + this.sliderValue + "px";
       } else console.log("no image");
     },
 
@@ -244,6 +244,7 @@ const createFontsList = function (fonts) {
       const loadedImgs = document.querySelectorAll(".font_image-crop");
       loadedImgs.forEach((img) => {
         this.resizeGridImgs(false, img);
+        // img.dataset.initialHeight = "";
       });
     },
 
@@ -312,8 +313,6 @@ const createFontsList = function (fonts) {
       },
     ],
 
-    sliderValue: 0,
-
     subscribed: false,
 
     itemFlex: "grid",
@@ -339,16 +338,148 @@ const createFontsList = function (fonts) {
       } else return "dyn-style-3";
     },
 
-    handleFontSize(event) {
-      const sliderValue = event.target.value;
-      const fontImage = document.querySelectorAll(".font_image-crop");
+    match2() {
+      if (store.itemFlex === "list") return "dyn-style-3";
+    },
 
-      fontImage.forEach((el) => {
-        const { width, height } = el.getBoundingClientRect();
-        const newHeight = height + (height * sliderValue) / 100;
-        console.log(newHeight);
-        el.style.height = `${sliderValue}%`;
-      });
+    handleFontSize(event) {
+      if (!event) store.sliderValue = 100;
+
+      if (event) {
+        store.sliderValue = +event.target.value;
+      }
+
+      const fontImageLink = document.querySelectorAll(".image_link");
+      const fontImageGrid1 = document.querySelectorAll(
+        ".font_image-crop.title-img-portrait-big"
+      );
+      const fontImageGrid2 = document.querySelectorAll(
+        ".font_image-crop.title-img-portrait-small"
+      );
+      const fontImageGrid3 = document.querySelectorAll(
+        ".font_image-crop.title-img-extreme-landscape-big"
+      );
+      const fontImageGrid4 = document.querySelectorAll(
+        ".font_image-crop.title-img-landscape-big"
+      );
+      const fontImageGrid5 = document.querySelectorAll(
+        ".font_image-crop.title-img-landscape-small"
+      );
+      const fontImageGrid6 = document.querySelectorAll(
+        ".font_image-crop.title-img-extreme-landscape-small"
+      );
+      const fontImageColumn1 = document.querySelectorAll(
+        ".font_image-crop.title-img-portrait-column"
+      );
+      const fontImageColumn2 = document.querySelectorAll(
+        ".font_image-crop.title-img-landscape-column"
+      );
+      const fontImageColumn3 = document.querySelectorAll(
+        ".font_image-crop.title-img-extreme-landscape-column"
+      );
+
+      const fontImage = document.querySelectorAll(
+        ".font_image-crop.title-img-landscape-list"
+      );
+      const fontImage2 = document.querySelectorAll(
+        ".font_image-crop.title-img-portrait-list"
+      );
+      const fontImage3 = document.querySelectorAll(
+        ".font_image-crop.title-img-portrait2-list"
+      );
+
+      if (store.gridType) {
+        // Portrait Big
+        fontImageGrid1.forEach((el) => {
+          el.style.height = store.sliderValue - 25 + "%";
+          el.style.width = "auto";
+          if (+el.style.height.slice(0, -1) <= 15) el.style.height = "15%";
+          if (+el.style.height.slice(0, -1) >= 120) el.style.height = "120%";
+        });
+        // Portrait Small
+        fontImageGrid2.forEach((el) => {
+          el.style.height = store.sliderValue - 55 + "%";
+          el.style.width = "auto";
+          if (+el.style.height.slice(0, -1) <= 10) el.style.height = "10%";
+          if (+el.style.height.slice(0, -1) >= 120) el.style.height = "120%";
+        });
+        // Extreme Landscape Big
+        fontImageGrid3.forEach((el) => {
+          el.style.height = "100%";
+          el.style.width = store.sliderValue - 15 + "%";
+          if (+el.style.width.slice(0, -1) <= 10) el.style.width = "10%";
+          if (+el.style.width.slice(0, -1) >= 98) el.style.width = "98%";
+        });
+        // Landscape Big
+        fontImageGrid4.forEach((el) => {
+          el.style.maxWidth = "none";
+          el.style.width = store.sliderValue - 25 + "%";
+          if (+el.style.width.slice(0, -1) <= 10) el.style.width = "10%";
+          if (+el.style.width.slice(0, -1) >= 98) el.style.width = "98%";
+        });
+        // Landscape Small
+        fontImageGrid5.forEach((el) => {
+          el.style.maxWidth = "none";
+          el.style.height = store.sliderValue - 85 + "%";
+          el.style.width = "auto";
+          if (+el.style.height.slice(0, -1) <= 5) el.style.height = "5%";
+          if (+el.style.height.slice(0, -1) >= 20) el.style.height = "20%";
+        });
+        // Extreme Landscape Small
+        fontImageGrid6.forEach((el) => {
+          el.style.height = "100%";
+          el.style.width = store.sliderValue - 10 + "%";
+          if (+el.style.height.slice(0, -1) <= 5) el.style.height = "5%";
+          if (+el.style.height.slice(0, -1) >= 20) el.style.height = "20%";
+        });
+      }
+
+      if (store.columnType) {
+        // Portrait
+        fontImageColumn1.forEach((el) => {
+          el.style.height = store.sliderValue - 45 + "%";
+          el.style.width = "auto";
+          if (+el.style.height.slice(0, -1) <= 20) el.style.height = "20%";
+          if (+el.style.height.slice(0, -1) >= 140) el.style.height = "140%";
+        });
+        // Landscape
+        fontImageColumn2.forEach((el) => {
+          el.style.height = store.sliderValue - 70 + "%";
+          el.style.width = store.sliderValue - 35 + "%";
+          // if (+el.style.height.slice(0, -1) <= 5) el.style.height = "5%";
+          // if (+el.style.width.slice(0, -1) >= 97) el.style.width = "97%";
+        });
+        // Extreme Landscape
+        fontImageColumn3.forEach((el) => {
+          el.style.height = "auto";
+          el.style.width = store.sliderValue - 25 + "%";
+          if (+el.style.width.slice(0, -1) <= 20) el.style.width = "20%";
+          if (+el.style.width.slice(0, -1) >= 70) el.style.width = "70%";
+        });
+      }
+
+      if (store.listType) {
+        // Landscape
+        if (store.sliderValue < 150 && store.sliderValue > 60) {
+          fontImage.forEach((el) => {
+            el.style.height = store.sliderValue / 10 - 5 + "rem";
+          });
+        }
+
+        // Portrait
+        if (store.sliderValue > 30) {
+          fontImage2.forEach((el) => {
+            el.style.height = store.sliderValue / 10 + 5 + "rem";
+          });
+        }
+
+        // Portrait 2
+        if (store.sliderValue < 140 && store.sliderValue > 40) {
+          fontImage3.forEach((el) => {
+            el.style.height = store.sliderValue / 10 + "rem";
+          });
+        }
+      }
     },
 
     handleColor(event) {

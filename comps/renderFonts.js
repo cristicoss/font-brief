@@ -2,6 +2,7 @@ import { loadingContainer, list } from "../globalVars.js";
 
 export function _showItemsWithFadeIn() {
   const fontItem = document.querySelectorAll(".font-list_item");
+
   loadingContainer.classList.remove("hidden");
   loadingContainer.classList.add("hidden");
   // list.classList.remove("hidden");
