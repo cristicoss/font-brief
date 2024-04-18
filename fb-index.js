@@ -21,6 +21,8 @@ import {
   nextTick,
 } from "./petite-vue/dist/petite-vue.es.js";
 
+import { effect } from "https://unpkg.com/@vue/reactivity@3.2.47/dist/reactivity.esm-browser.js";
+
 // const { createApp, reactive, nextTick } = petite;
 
 import showFilters from "./comps/renderIsland.js";
@@ -72,11 +74,14 @@ let promotedFontsIds = [];
       (a, b) => new Date(b.created_at) - new Date(a.created_at)
     );
 
+    const randomizedNonPromotedFonts = sortedNonPromotedFonts
+      .slice(2)
+      .sort(() => Math.random() - 0.5);
     // Insert promoted fonts at the 3rd and 4th positions
     const sortedFonts = [
       ...sortedNonPromotedFonts.slice(0, 2), // First two non-promoted fonts
       ...promotedFonts, // Promoted fonts
-      ...sortedNonPromotedFonts.slice(2), // Remaining non-promoted fonts
+      ...randomizedNonPromotedFonts, // Remaining non-promoted fonts
     ];
     // end //
 
@@ -96,7 +101,7 @@ let promotedFontsIds = [];
 export class App {
   // fonts = fonts;
   hashFragment = [];
-  constructor(store, counter) {
+  constructor(store) {
     this._showItemsWithFadeIn = _showItemsWithFadeIn;
     this._pagBtnHandler = _pagBtnHandler;
     this._paginate = _paginate;
@@ -113,7 +118,7 @@ export class App {
     this._handleNewsletter = _newsletter;
 
     this.store = store;
-    this.counter = counter;
+
     this._pausePromoSection();
     this._checkUncheck();
 
@@ -181,155 +186,9 @@ const createFontsList = function (fonts) {
     gridType: true,
     columnType: false,
 
+    subfilter: "",
+
     sliderValue: 90,
-
-    /*
-    resizeGridImgs(event, img) {
-      if (event || img) {
-        const image = event.target || img;
-        const classes = image.className.split(" ");
-        if (classes.length > 1) {
-          // Keep the first class and remove all other classes
-          image.className = classes[0];
-        }
-
-        // Traverse up the DOM tree to find the parent div with class "dyn-style-2"
-        let parentDiv = image.parentElement;
-        const { width, height } = image.getBoundingClientRect();
-
-        while (parentDiv) {
-          if (parentDiv.classList.contains("dyn-style-1")) {
-            console.log("dyn-style-1");
-            if (width / height < 2.5) {
-              image.classList.remove("title-img-extreme-landscape-column");
-              image.classList.add("title-img-portrait-column");
-            } else image.classList.add("title-img-landscape-column");
-
-            // image.dataset.initialHeight = getComputedStyle(image).height;
-          } else if (parentDiv.classList.contains("dyn-style-3")) {
-            if (width / height < 1.7) {
-              image.classList.add("title-img-portrait-list");
-            }
-            if (width / height < 2.5 && width / height >= 1.7) {
-              image.classList.add("title-img-portrait2-list");
-            } else if (width / height >= 2.5) {
-              image.classList.add("title-img-landscape-list");
-            }
-            // image.dataset.initialHeight = getComputedStyle(image).height;
-          } else if (parentDiv.classList.contains("dyn-style-2")) {
-            if (width / height <= 2.3) {
-              image.classList.add("title-img-portrait-big");
-            } else image.classList.add("title-img-landscape-big");
-
-            // image.dataset.initialHeight = getComputedStyle(image).height;
-          }
-
-          if (parentDiv.classList.contains("dyn-style-0")) {
-            if (width / height < 2) {
-              image.classList.add("title-img-portrait-small");
-            } else if (width / height >= 2) {
-              image.classList.add("title-img-landscape-small");
-            }
-            // image.dataset.initialHeight = getComputedStyle(image).height;
-          }
-
-          parentDiv = parentDiv.parentElement;
-        }
-        // image.style.height =
-        //   +image.dataset.initialHeight + this.sliderValue + "px";
-      } else console.log("no image");
-    },
-    */
-
-    /*
-    loadedImages() {
-      console.clear();
-
-      const loadedImgs = document.querySelectorAll(".font_image-crop");
-      loadedImgs.forEach((img) => {
-        const imgWidth = img.width;
-        const imgHeight = img.height;
-        const aspectRatio = imgWidth / imgHeight;
-
-        var maxHeightPercent = 90; // 90% of container height
-        var maxWidthPercent = 90; // 90% of container width
-
-        // Calculate the proportional height and width within bounds
-        var proportionalHeightPercent, proportionalWidthPercent;
-
-        let parent = img.parentNode;
-        while (parent) {
-          if (parent.classList && parent.classList.contains("dyn-style-2")) {
-            if (imgHeight > imgWidth) {
-              proportionalHeightPercent =
-                Math.min(store.sliderValue, 100) / 1.5;
-              proportionalWidthPercent =
-                proportionalHeightPercent / aspectRatio;
-            } else {
-              proportionalWidthPercent = Math.min(store.sliderValue, 100) / 1.5;
-              proportionalHeightPercent =
-                proportionalWidthPercent * aspectRatio;
-            }
-            img.style.width = proportionalWidthPercent + "%";
-            img.style.height = proportionalHeightPercent + "%";
-            break;
-          }
-
-          if (parent.classList && parent.classList.contains("dyn-style-0")) {
-            if (imgHeight > imgWidth) {
-              proportionalHeightPercent = Math.min(store.sliderValue, 100) / 2;
-              proportionalWidthPercent =
-                proportionalHeightPercent / aspectRatio;
-            } else {
-              proportionalWidthPercent = Math.min(store.sliderValue, 100) / 2;
-              proportionalHeightPercent =
-                proportionalWidthPercent * aspectRatio;
-            }
-            img.style.width = proportionalWidthPercent + "%";
-            img.style.height = proportionalHeightPercent + "%";
-            break;
-          }
-
-          if (parent.classList && parent.classList.contains("dyn-style-1")) {
-            if (imgHeight > imgWidth) {
-              proportionalHeightPercent =
-                Math.min(store.sliderValue, 100) / 1.7;
-              proportionalWidthPercent =
-                proportionalHeightPercent / aspectRatio;
-            } else {
-              proportionalWidthPercent = Math.min(store.sliderValue, 100) / 1.7;
-              proportionalHeightPercent =
-                proportionalWidthPercent * aspectRatio;
-            }
-            img.style.width = proportionalWidthPercent + "%";
-            img.style.height = proportionalHeightPercent + "%";
-            break;
-          }
-
-          if (parent.classList && parent.classList.contains("dyn-style-3")) {
-            if (imgHeight > imgWidth) {
-              img.style.width = (imgWidth / imgHeight) * 20 + "rem";
-              proportionalHeightPercent =
-                proportionalWidthPercent * aspectRatio;
-            } else {
-              img.style.width = (imgWidth / imgHeight) * 6 + "rem";
-              if (imgWidth / imgHeight < 2.5 && imgWidth / imgHeight > 1) {
-                img.style.width = (imgWidth / imgHeight) * 10 + "rem";
-                proportionalHeightPercent =
-                  proportionalWidthPercent * aspectRatio;
-              }
-            }
-
-            break;
-          }
-
-          parent = parent.parentNode;
-        }
-        // this.resizeGridImgs(false, img);
-        console.log(img);
-      });
-    },
-    */
 
     throttle(func, limit) {
       let inThrottle;
@@ -344,14 +203,32 @@ const createFontsList = function (fonts) {
       };
     },
 
-    resetSlider() {
+    handleSubFilters(subFilter) {
+      store.subfilter = subFilter;
+      console.log(store.subfilter);
+    },
+
+    resetSlider(e) {
       store.sliderValue = 90;
       store.loadImgs();
     },
 
-    loadImgs(event) {
-      if (event) store.sliderValue = event.target.value;
+    removePlaceholder() {
+      const promoFonts = document.querySelectorAll(".promo-font_wrapper");
+      const promoFonts2 = document.querySelectorAll(".promo-font-2_wrapper");
+      const placeHolder = document.querySelectorAll(".placeholder_container");
 
+      placeHolder.forEach((el) => {
+        el.classList.add("loaded");
+      });
+
+      const allPromoFonts = [...promoFonts, ...promoFonts2];
+      allPromoFonts.forEach((el) => {
+        el.classList.add("active");
+      });
+    },
+
+    loadImgs() {
       const loadedImgs = document.querySelectorAll(".font_image-crop");
       loadedImgs.forEach((img) => {
         const imgWidth = img.width;
@@ -445,6 +322,8 @@ const createFontsList = function (fonts) {
 
       store.loadImgs();
     },
+
+    subfilterClicks: [0, 0, 0, 0],
 
     clicks: [0, 0, 0, 0, 0, 0, 0, 0, 0],
     divIndex: 0,
@@ -540,148 +419,6 @@ const createFontsList = function (fonts) {
       if (store.itemFlex === "list") return "dyn-style-3";
     },
 
-    /*
-    handleFontSize(event) {
-      if (!event) store.sliderValue = 100;
-
-      if (event) {
-        store.sliderValue = +event.target.value;
-      }
-
-      const fontImageLink = document.querySelectorAll(".image_link");
-      const fontImageGrid1 = document.querySelectorAll(
-        ".font_image-crop.title-img-portrait-big"
-      );
-      const fontImageGrid2 = document.querySelectorAll(
-        ".font_image-crop.title-img-portrait-small"
-      );
-      const fontImageGrid3 = document.querySelectorAll(
-        ".font_image-crop.title-img-extreme-landscape-big"
-      );
-      const fontImageGrid4 = document.querySelectorAll(
-        ".font_image-crop.title-img-landscape-big"
-      );
-      const fontImageGrid5 = document.querySelectorAll(
-        ".font_image-crop.title-img-landscape-small"
-      );
-      const fontImageGrid6 = document.querySelectorAll(
-        ".font_image-crop.title-img-extreme-landscape-small"
-      );
-      const fontImageColumn1 = document.querySelectorAll(
-        ".font_image-crop.title-img-portrait-column"
-      );
-      const fontImageColumn2 = document.querySelectorAll(
-        ".font_image-crop.title-img-landscape-column"
-      );
-      const fontImageColumn3 = document.querySelectorAll(
-        ".font_image-crop.title-img-extreme-landscape-column"
-      );
-
-      const fontImage = document.querySelectorAll(
-        ".font_image-crop.title-img-landscape-list"
-      );
-      const fontImage2 = document.querySelectorAll(
-        ".font_image-crop.title-img-portrait-list"
-      );
-      const fontImage3 = document.querySelectorAll(
-        ".font_image-crop.title-img-portrait2-list"
-      );
-
-      if (store.gridType) {
-        // Portrait Big
-        fontImageGrid1.forEach((el) => {
-          el.style.height = store.sliderValue - 25 + "%";
-          el.style.width = "auto";
-          if (+el.style.height.slice(0, -1) <= 15) el.style.height = "15%";
-          if (+el.style.height.slice(0, -1) >= 120) el.style.height = "120%";
-        });
-        // Portrait Small
-        fontImageGrid2.forEach((el) => {
-          el.style.height = store.sliderValue - 55 + "%";
-          el.style.width = "auto";
-          if (+el.style.height.slice(0, -1) <= 10) el.style.height = "10%";
-          if (+el.style.height.slice(0, -1) >= 120) el.style.height = "120%";
-        });
-        // Extreme Landscape Big
-        fontImageGrid3.forEach((el) => {
-          el.style.height = "100%";
-          el.style.width = store.sliderValue - 15 + "%";
-          if (+el.style.width.slice(0, -1) <= 10) el.style.width = "10%";
-          if (+el.style.width.slice(0, -1) >= 98) el.style.width = "98%";
-        });
-        // Landscape Big
-        fontImageGrid4.forEach((el) => {
-          el.style.maxWidth = "none";
-          el.style.width = store.sliderValue - 25 + "%";
-          if (+el.style.width.slice(0, -1) <= 10) el.style.width = "10%";
-          if (+el.style.width.slice(0, -1) >= 98) el.style.width = "98%";
-        });
-        // Landscape Small
-        fontImageGrid5.forEach((el) => {
-          el.style.maxWidth = "none";
-          el.style.height = store.sliderValue - 85 + "%";
-          el.style.width = "auto";
-          if (+el.style.height.slice(0, -1) <= 5) el.style.height = "5%";
-          if (+el.style.height.slice(0, -1) >= 20) el.style.height = "20%";
-        });
-        // Extreme Landscape Small
-        fontImageGrid6.forEach((el) => {
-          el.style.height = "100%";
-          el.style.width = store.sliderValue - 10 + "%";
-          if (+el.style.height.slice(0, -1) <= 5) el.style.height = "5%";
-          if (+el.style.height.slice(0, -1) >= 20) el.style.height = "20%";
-        });
-      }
-
-      if (store.columnType) {
-        // Portrait
-        fontImageColumn1.forEach((el) => {
-          el.style.height = store.sliderValue - 45 + "%";
-          el.style.width = "auto";
-          if (+el.style.height.slice(0, -1) <= 20) el.style.height = "20%";
-          if (+el.style.height.slice(0, -1) >= 140) el.style.height = "140%";
-        });
-        // Landscape
-        fontImageColumn2.forEach((el) => {
-          el.style.height = store.sliderValue - 70 + "%";
-          el.style.width = store.sliderValue - 35 + "%";
-          // if (+el.style.height.slice(0, -1) <= 5) el.style.height = "5%";
-          // if (+el.style.width.slice(0, -1) >= 97) el.style.width = "97%";
-        });
-        // Extreme Landscape
-        fontImageColumn3.forEach((el) => {
-          el.style.height = "auto";
-          el.style.width = store.sliderValue - 25 + "%";
-          if (+el.style.width.slice(0, -1) <= 20) el.style.width = "20%";
-          if (+el.style.width.slice(0, -1) >= 70) el.style.width = "70%";
-        });
-      }
-
-      if (store.listType) {
-        // Landscape
-        if (store.sliderValue < 150 && store.sliderValue > 60) {
-          fontImage.forEach((el) => {
-            el.style.height = store.sliderValue / 10 - 5 + "rem";
-          });
-        }
-
-        // Portrait
-        if (store.sliderValue > 30) {
-          fontImage2.forEach((el) => {
-            el.style.height = store.sliderValue / 10 + 5 + "rem";
-          });
-        }
-
-        // Portrait 2
-        if (store.sliderValue < 140 && store.sliderValue > 40) {
-          fontImage3.forEach((el) => {
-            el.style.height = store.sliderValue / 10 + "rem";
-          });
-        }
-      }
-    },
-*/
-
     handleColor(event) {
       if (!event) return store.styles[0];
 
@@ -689,6 +426,8 @@ const createFontsList = function (fonts) {
       if (store.stylesIndex >= store.styles.length) store.stylesIndex = 0;
       return store.stylesIndex;
     },
+
+    handleSubfiltersClick() {},
 
     handleClick(event) {
       this.store.divIndex = parseInt(event.target.getAttribute("data-atr"));
@@ -698,6 +437,10 @@ const createFontsList = function (fonts) {
 
       const selector = `div[data-atr^="${this.store.divIndex}"]`;
       this.store.allFiltersFromThisCat = document.querySelectorAll(selector);
+    },
+
+    handleSubfilters(subfilter) {
+      this.store.allFiltersFromThisCat = subfilter;
     },
 
     handleMouseOver(event) {
@@ -775,4 +518,6 @@ const createFontsList = function (fonts) {
 
     updateList: new App(store),
   }).mount("#app");
+
+  return store;
 };

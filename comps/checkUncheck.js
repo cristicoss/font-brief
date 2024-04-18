@@ -1,6 +1,31 @@
-import { checkboxesContainer } from "../globalVars.js";
+import { checkboxesContainer, allSubfilters } from "../globalVars.js";
 
 export default function _checkUncheck() {
+  allSubfilters.forEach((subfilter) => {
+    subfilter.addEventListener("click", (e) => {
+      const checkboxIndex = e.target.dataset?.index;
+      let atr = e.target.dataset?.atr;
+      let checkbox = e.target.querySelector(".filter_sans-check");
+
+      if (checkbox.classList.contains("blue")) {
+        checkbox.classList.remove("blue");
+        atr = "sansx";
+      }
+      if (atr === "sans") {
+        allSubfilters[1]
+          .querySelector(".filter_sans-check")
+          .classList.remove("blue");
+      }
+      if (atr === "serif") {
+        allSubfilters[0]
+          .querySelector(".filter_sans-check")
+          .classList.remove("blue");
+      }
+
+      this._updateUrl([atr], +checkboxIndex);
+    });
+  });
+
   checkboxesContainer.forEach((check) => {
     check.addEventListener("click", (e) => {
       const uncheck = check.querySelector(".uncheck");
@@ -8,12 +33,12 @@ export default function _checkUncheck() {
       const allCheckboxes = [...check.querySelectorAll(".filter_box")];
       let arrToFilter = [];
       const currCheckbox = e.target.closest(".filter_box");
-      const checkboxIndex = Number(currCheckbox.dataset?.atr.slice(0, -1));
+      const checkboxIndex = Number(currCheckbox.dataset?.index);
       if (!currCheckbox) return;
 
       arrToFilter.push(currCheckbox.dataset.atr);
       if (this.store.clicks[checkboxIndex] === 0) {
-        this._updateUrl([e.target.dataset.atr.slice(0, -1) + "x"]);
+        this._updateUrl([checkboxIndex + "x"], checkboxIndex);
 
         return;
       } else {
@@ -51,7 +76,7 @@ export default function _checkUncheck() {
       }
 
       const uniqueArrToFilter = [...new Set(arrToFilter)];
-      this._updateUrl(uniqueArrToFilter);
+      this._updateUrl(uniqueArrToFilter, checkboxIndex);
     });
   });
 }

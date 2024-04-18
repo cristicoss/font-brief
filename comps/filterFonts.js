@@ -33,6 +33,11 @@ export default function _filterFonts(urlParams) {
     ? urlParams.get("wrm").match(/.{1,2}/g)
     : ["8a", "8i", "8o", "8m", "8j"];
 
+  let sans = urlParams.get("sans");
+  let wrkhrs = urlParams.get("wrkhrs");
+  wrkhrs ? (wrkhrs = wrkhrs[0].toUpperCase() + wrkhrs.slice(1)) : "";
+  let free = urlParams.get("free");
+
   let pag = urlParams.get("pag") ? +urlParams.get("pag") : 1;
 
   const filteredFonts = this.store.sortedFonts.filter(
@@ -44,7 +49,10 @@ export default function _filterFonts(urlParams) {
       prgrssv.some((substring) => font.progressive.includes(substring)) &&
       drng.some((substring) => font.daring.includes(substring)) &&
       dscrt.some((substring) => font.discreet.includes(substring)) &&
-      wrm.some((substring) => font.warm.includes(substring))
+      wrm.some((substring) => font.warm.includes(substring)) &&
+      (!sans || font.sans?.includes(sans)) &&
+      (!wrkhrs || font.workhorse?.includes(wrkhrs)) &&
+      (!free || font.free?.includes(free))
   );
 
   this.store.counter = filteredFonts.length;

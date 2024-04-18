@@ -172,3 +172,23 @@ input[type="range"]::-moz-range-track {
 .v-cloak {
   display: none;
 }
+
+.placeholder_container {
+  animation: pulse 0.3s infinite;
+}
+
+.placeholder_container.loaded {
+  animation: none;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}

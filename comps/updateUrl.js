@@ -1,4 +1,4 @@
-export default function _updateUrl(str) {
+export default function _updateUrl(str, checkboxIndex) {
   if (!str) {
     this._readUrl();
     return;
@@ -37,6 +37,18 @@ export default function _updateUrl(str) {
       name: "wrm",
       value: "",
     },
+    {
+      name: "sans",
+      value: "",
+    },
+    {
+      name: "wrkhrs",
+      value: "",
+    },
+    {
+      name: "free",
+      value: "",
+    },
   ];
 
   const url = new URL(window.location.href);
@@ -53,7 +65,7 @@ export default function _updateUrl(str) {
   const paramValue = str.join("");
 
   params.forEach((param, index) => {
-    if (+paramValue.slice(0, 1) - 1 === index) {
+    if (checkboxIndex === index + 1) {
       param.value = paramValue;
       updateQueryParam(param.name, param.value);
     }
@@ -64,27 +76,4 @@ export default function _updateUrl(str) {
   }
 
   this._readUrl();
-
-  /*
-
-  if (!str) {
-    this._readUrl();
-    return;
-  }
-
-  if (str.toString().endsWith("x")) {
-    this.hashFragment = this.hashFragment.filter(
-      (item) => !item.includes(str[0])
-    );
-  } else {
-    this.hashFragment = Array.from(new Set(this.hashFragment.concat(str)));
-  }
-
-  const url = new URL(window.location.href);
-  url.hash = this.hashFragment;
-
-  history.pushState(null, null, url.toString().replace(/,/g, ""));
-
-  this._readUrl();
-  */
 }

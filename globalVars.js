@@ -7,6 +7,12 @@ export const resetBtn = document.querySelector(".reset_btn");
 export const allUncheck = document.querySelectorAll(".uncheck");
 export const itemsPerPage = 50;
 
+export const sansSerif = document.querySelector(".filter_sans-container");
+export const serif = document.querySelector(".filter_serif-container");
+export const workhorse = document.querySelector(".filter_workhorse-container");
+export const free = document.querySelector(".filter_free-container");
+export const allSubfilters = [sansSerif, serif, workhorse, free];
+
 export const gridBtn = document.querySelector(".grid-view_btn");
 export const listBtn = document.querySelector(".list-view_btn");
 export const columnsBtn = document.querySelector(".columns-view_btn");
