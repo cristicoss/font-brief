@@ -4,6 +4,15 @@ export default function _updateUrl(str, checkboxIndex) {
     return;
   }
 
+  const paramValue = str.join("");
+  const url = new URL(window.location.href);
+
+  if (paramValue.startsWith("page")) {
+    updateQueryParam("pag", paramValue.slice(4));
+    this._readUrl();
+    return;
+  }
+
   const params = [
     {
       name: "expr",
@@ -51,8 +60,6 @@ export default function _updateUrl(str, checkboxIndex) {
     },
   ];
 
-  const url = new URL(window.location.href);
-
   function updateQueryParam(key, value) {
     url.searchParams.set(key, value);
 
@@ -62,18 +69,12 @@ export default function _updateUrl(str, checkboxIndex) {
     window.history.pushState({}, "", url);
   }
 
-  const paramValue = str.join("");
-
   params.forEach((param, index) => {
     if (checkboxIndex === index + 1) {
       param.value = paramValue;
       updateQueryParam(param.name, param.value);
     }
   });
-
-  if (paramValue.startsWith("page")) {
-    updateQueryParam("pag", paramValue.slice(4));
-  }
 
   this._readUrl();
 }

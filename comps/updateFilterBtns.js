@@ -8,8 +8,11 @@ export default function _updateFilters(params) {
   });
 
   allSubfilters.forEach(function (subfilter) {
+    const checkbox = subfilter.querySelector(".filter_sans-check");
     if (paramString.includes(subfilter.dataset.atr)) {
-      subfilter.querySelector(".filter_sans-check").classList.add("blue");
+      checkbox.classList.add("blue");
+    } else {
+      checkbox.classList.remove("blue");
     }
   });
 

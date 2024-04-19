@@ -299,7 +299,7 @@ const createFontsList = function (fonts) {
                 proportionalWidthPercent * aspectRatio;
             } else {
               img.style.width =
-                ((imgWidth / imgHeight) * 6 * store.sliderValue) / 100 + "rem";
+                ((imgWidth / imgHeight) * 5 * store.sliderValue) / 100 + "rem";
               if (imgWidth / imgHeight < 2.5 && imgWidth / imgHeight > 1) {
                 img.style.width =
                   ((imgWidth / imgHeight) * 10 * store.sliderValue) / 100 +
