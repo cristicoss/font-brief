@@ -24,3 +24,11 @@ export const checkboxesContainer = document.querySelectorAll(
 export const fontItem = document.querySelectorAll(".font-list_item");
 
 export const fontImageCrop = document.querySelector(".font_image-crop");
+
+export const burgerMenu = document.querySelector(".menu_burger-container");
+export const filtersContainer = document.querySelector(".filters_container");
+export const islandContainer = document.querySelector(".island_container");
+export const island = document.querySelector(".island_wrapper");
+export const wrapper = document.querySelector(".main-wrapper");
+export const introSection = document.querySelector(".section_intro");
+export const menuItems = document.querySelector(".menu_items");

@@ -121,6 +121,11 @@
   max-height: 0;
 }
 
+.menu-items.fadein.active {
+  opacity: 1;
+  max-height: 100vh;
+}
+
 /* ////////// Style for input range that controls the size //////// */
 
 /* General */
@@ -191,4 +196,24 @@ input[type="range"]::-moz-range-track {
   100% {
     opacity: 0.5;
   }
+}
+
+.island_container {
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+.island_wrapper {
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+intro-delete {
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+expanded {
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+}
+
+island-intro {
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
 }

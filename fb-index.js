@@ -44,11 +44,12 @@ import _pausePromoSection from "./comps/promo-section.js";
 import _newsletter from "./handleNewsletter.js";
 
 import {
-  list,
   resetBtn,
-  itemsPerPage,
   allCheckboxes,
-  fontImageCrop,
+  island,
+  islandContainer,
+  filtersContainer,
+  menuItems,
 } from "./globalVars.js";
 
 let loadedFonts = [];
@@ -514,6 +515,13 @@ const createFontsList = function (fonts) {
         .querySelector(".newsletter_wrapper-fixed")
         .classList.add("active");
       this.store.subscribed = true;
+    },
+
+    handleMenu() {
+      island.classList.remove("island-intro");
+      filtersContainer.classList.toggle("hidden");
+      islandContainer.classList.toggle("expanded");
+      // menuItems.classList.toggle("active");
     },
 
     updateList: new App(store),
