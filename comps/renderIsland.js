@@ -1,7 +1,8 @@
-import { wrapper, island, islandContainer } from "../globalVars.js";
+import { wrapper, islandWrapper, islandContainer } from "../globalVars.js";
 
 const fbTitle = document.querySelector(".fb_name-big");
-const fbTitleLogo = document.querySelector(".fb_name-logo");
+const observedSection = document.querySelector(".section-observed");
+// const fbTitleLogo = document.querySelector(".fb_name-logo");
 const filterAttContainer = document.querySelector(
   ".filters_attributes-container"
 );
@@ -11,33 +12,44 @@ const filterSecondaryContainer = document.querySelector(
 const filterContainer = document.querySelectorAll(".filter_container");
 
 export default function showFilters() {
-  islandContainer.classList.remove("island-intro");
-  islandContainer.classList.add("island-intro");
-  window.addEventListener("scroll", function () {
-    if (window.pageYOffset <= 20) {
-      islandContainer.classList.remove("island-intro");
-      islandContainer.classList.add("island-intro");
-    } else {
-      islandContainer.classList.remove("island-intro");
-    }
-  });
-  fbTitleLogo.classList.add("active");
-  fbTitle.classList.add("active");
+  function fadeIsland(element) {
+    element.classList.add("active");
+  }
 
-  requestAnimationFrame(() => {
+  setTimeout(fadeIsland(islandContainer), 1000);
+  // setTimeout(fadeIsland(fbTitle), 3000);
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          islandContainer.classList.remove("grow");
+          islandContainer.classList.add("grow");
+        } else {
+          islandContainer.classList.remove("grow");
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  observer.observe(observedSection);
+
+  function requestAnimationFrame() {
     fbTitle.classList.add("hidden");
     filterAttContainer.classList.remove("hidden");
     filterAttContainer.classList.add("active");
     filterSecondaryContainer.classList.remove("hidden");
+    filterSecondaryContainer.classList.add("active");
 
     filterContainer.forEach((item, index) => {
       setTimeout(() => {
         item.classList.add("active");
       }, index * 100);
     });
-  });
+  }
 
-  requestAnimationFrame(() => {
-    filterSecondaryContainer.classList.add("active");
-  });
+  // fbTitle.classList.add("hidden");
+
+  setTimeout(requestAnimationFrame, 1000);
 }

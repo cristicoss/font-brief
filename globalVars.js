@@ -27,8 +27,13 @@ export const fontImageCrop = document.querySelector(".font_image-crop");
 
 export const burgerMenu = document.querySelector(".menu_burger-container");
 export const filtersContainer = document.querySelector(".filters_container");
-export const islandContainer = document.querySelector(".island_container");
-export const island = document.querySelector(".island_wrapper");
+
 export const wrapper = document.querySelector(".main-wrapper");
 export const introSection = document.querySelector(".section_intro");
-export const menuItems = document.querySelector(".menu_items");
+export const fontSection = document.querySelector(".section-observed");
+export const parentIsland = document.querySelector(".parent");
+
+export const islandContainer = document.querySelector(".island_container");
+export const islandWrapper = document.querySelector(".island_wrapper");
+export const menuContainer = document.querySelector(".menu_container");
+export const menuWrapper = document.querySelector(".menu_wrapper");

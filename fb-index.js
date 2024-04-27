@@ -11,17 +11,14 @@
 <link rel="stylesheet" href="https://cristicoss.github.io/font-brief/style-fontbrief.css" defer>
 */
 
-//// Trebuie sa schimb # cu & in url
+//// Trebuie sa schimb # cu & in url showFilters
 
 "use strict";
-
 import {
   createApp,
   reactive,
   nextTick,
 } from "./petite-vue/dist/petite-vue.es.js";
-
-import { effect } from "https://unpkg.com/@vue/reactivity@3.2.47/dist/reactivity.esm-browser.js";
 
 // const { createApp, reactive, nextTick } = petite;
 
@@ -46,10 +43,12 @@ import _newsletter from "./handleNewsletter.js";
 import {
   resetBtn,
   allCheckboxes,
-  island,
+  islandWrapper,
   islandContainer,
   filtersContainer,
-  menuItems,
+  parentIsland,
+  menuContainer,
+  menuWrapper,
 } from "./globalVars.js";
 
 let loadedFonts = [];
@@ -180,6 +179,7 @@ export class App {
 const createFontsList = function (fonts) {
   //Petie Vue
   const store = reactive({
+    islandAtTop: false,
     sortedFonts: fonts,
     fonts: fonts.slice(0, 5),
     counter: 0,
@@ -517,11 +517,34 @@ const createFontsList = function (fonts) {
       this.store.subscribed = true;
     },
 
-    handleMenu() {
-      island.classList.remove("island-intro");
-      filtersContainer.classList.toggle("hidden");
-      islandContainer.classList.toggle("expanded");
-      // menuItems.classList.toggle("active");
+    openMenu() {
+      // Open Full Menu
+      islandWrapper.classList.add("hidden");
+      islandContainer.classList.add("full-menu");
+      islandContainer.style.transform = "translateY(0)";
+      setTimeout(() => {
+        islandContainer.classList.remove("active");
+        menuContainer.classList.remove("hidden");
+        menuWrapper.classList.add("active");
+      }, 600);
+    },
+
+    closeMenu() {
+      menuContainer.classList.add("hidden");
+      islandContainer.classList.remove("full-menu");
+      islandContainer.classList.add("active");
+
+      const parentRect = parentIsland.getBoundingClientRect();
+      const childRect = islandContainer.getBoundingClientRect();
+      if (parentRect.height > 96) {
+        const parentRect = parentIsland.getBoundingClientRect();
+        const targetY = -(parentRect.height * 0.5 - 48);
+
+        islandContainer.style.transform = `translateY(${-targetY}px)`;
+      }
+      setTimeout(() => {
+        islandWrapper.classList.remove("hidden");
+      }, 500);
     },
 
     updateList: new App(store),

@@ -119,6 +119,7 @@
 .fadeout.active {
   opacity: 0;
   max-height: 0;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .menu-items.fadein.active {
@@ -199,21 +200,24 @@ input[type="range"]::-moz-range-track {
 }
 
 .island_container {
-  transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+  transition: transform 0.5s ease-out, height 0.5s ease-out, width 0.5s ease-out,
+    align-items 0.2s;
 }
 
-.island_wrapper {
-  transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+.island_container.fadein.active {
+  transition: transform 0.5s ease-out, height 0.5s ease-out, width 0.5s ease-out,
+    align-items 0.2s;
 }
 
-intro-delete {
-  transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+.island_container.fadein.active.grow {
+  transition: transform 0.5s ease-out, height 0.5s ease-out, width 0.5s ease-out;
 }
 
-expanded {
-  transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+.full-menu {
+  transition: transform 0.5s, height 0.5s ease-out, width 0.5s ease-out;
 }
 
-island-intro {
-  transition: width 0.5s ease-in-out, height 0.5s ease-in-out;
+.grow {
+  transition: transform 0.5s, height 0.5s ease-out, width 0.5s ease-out,
+    align-items 0.2s;
 }

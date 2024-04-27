@@ -19,7 +19,6 @@ export default function _pausePromoSection() {
           sponsorRow.forEach((row) => {
             row.classList.remove("paused");
           });
-          console.log("intersected");
         } else {
           promoRow.forEach((row) => {
             row.classList.add("paused");
