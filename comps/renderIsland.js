@@ -1,4 +1,4 @@
-import { wrapper, islandWrapper, islandContainer } from "../globalVars.js";
+import { wrapper, headlineWrapper, islandContainer } from "../globalVars.js";
 
 const fbTitle = document.querySelector(".fb_name-big");
 const observedSection = document.querySelector(".section-observed");
@@ -16,15 +16,15 @@ export default function showFilters() {
     element.classList.add("active");
   }
 
-  setTimeout(fadeIsland(islandContainer), 1000);
+  // setTimeout(fadeIsland(islandContainer), 5000);
   // setTimeout(fadeIsland(fbTitle), 3000);
 
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          islandContainer.classList.remove("grow");
-          islandContainer.classList.add("grow");
+          if (!islandContainer.classList.contains("grow"))
+            islandContainer.classList.add("grow");
         } else {
           islandContainer.classList.remove("grow");
         }
@@ -34,6 +34,7 @@ export default function showFilters() {
   );
 
   observer.observe(observedSection);
+  setTimeout(islandContainer.classList.add("active"), 500);
 
   function requestAnimationFrame() {
     fbTitle.classList.add("hidden");

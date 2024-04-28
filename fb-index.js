@@ -45,7 +45,6 @@ import {
   allCheckboxes,
   islandWrapper,
   islandContainer,
-  filtersContainer,
   parentIsland,
   menuContainer,
   menuWrapper,
@@ -538,7 +537,7 @@ const createFontsList = function (fonts) {
       const childRect = islandContainer.getBoundingClientRect();
       if (parentRect.height > 96) {
         const parentRect = parentIsland.getBoundingClientRect();
-        const targetY = -(parentRect.height * 0.5 - 48);
+        const targetY = -(parentRect.height * 0.5 - 90);
 
         islandContainer.style.transform = `translateY(${-targetY}px)`;
       }

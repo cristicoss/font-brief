@@ -200,16 +200,23 @@ input[type="range"]::-moz-range-track {
 }
 
 .island_container {
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+
   transition: transform 0.5s ease-out, height 0.5s ease-out, width 0.5s ease-out,
     align-items 0.2s;
 }
 
 .island_container.fadein.active {
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
   transition: transform 0.5s ease-out, height 0.5s ease-out, width 0.5s ease-out,
     align-items 0.2s;
 }
 
 .island_container.fadein.active.grow {
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
   transition: transform 0.5s ease-out, height 0.5s ease-out, width 0.5s ease-out;
 }
 
