@@ -204,27 +204,50 @@ input[type="range"]::-moz-range-track {
   backdrop-filter: blur(15px);
 
   transition: transform 0.5s ease-out, height 0.5s ease-out, width 0.5s ease-out,
-    align-items 0.2s;
+    position 0.5s ease-out, align-items 0.2s;
 }
 
 .island_container.fadein.active {
   -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
   transition: transform 0.5s ease-out, height 0.5s ease-out, width 0.5s ease-out,
-    align-items 0.2s;
+    position 0.5s ease-out, align-items 0.2s;
 }
 
 .island_container.fadein.active.grow {
   -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
-  transition: transform 0.5s ease-out, height 0.5s ease-out, width 0.5s ease-out;
+  transition: transform 0.5s ease-out, height 0.5s ease-out, width 0.5s ease-out,
+    position 0.5s ease-out;
 }
 
 .full-menu {
-  transition: transform 0.5s, height 0.5s ease-out, width 0.5s ease-out;
+  transition: transform 0.5s, height 0.5s ease-out, width 0.5s ease-out,
+    position 0.5s ease-out;
 }
 
 .grow {
   transition: transform 0.5s, height 0.5s ease-out, width 0.5s ease-out,
-    align-items 0.2s;
+    position 0.5s ease-out, align-items 0.2s;
+}
+
+.island-test {
+  position: sticky;
+  top: 0;
+  width: 80rem;
+  background-color: #f1f1f1;
+  padding: 10px 0;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.menu-full {
+  position: fixed;
+  top: 0;
+  width: 70rem;
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+  transition: all 0.3s ease;
 }

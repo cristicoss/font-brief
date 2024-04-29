@@ -16,7 +16,7 @@ export default function showFilters() {
     element.classList.add("active");
   }
 
-  // setTimeout(fadeIsland(islandContainer), 5000);
+  setTimeout(fadeIsland(islandContainer), 5000);
   // setTimeout(fadeIsland(fbTitle), 3000);
 
   const observer = new IntersectionObserver(
@@ -34,9 +34,9 @@ export default function showFilters() {
   );
 
   observer.observe(observedSection);
-  setTimeout(islandContainer.classList.add("active"), 500);
 
   function requestAnimationFrame() {
+    setTimeout(islandContainer.classList.add("active"), 1000);
     fbTitle.classList.add("hidden");
     filterAttContainer.classList.remove("hidden");
     filterAttContainer.classList.add("active");

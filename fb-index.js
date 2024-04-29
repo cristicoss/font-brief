@@ -523,6 +523,7 @@ const createFontsList = function (fonts) {
       islandContainer.style.transform = "translateY(0)";
       setTimeout(() => {
         islandContainer.classList.remove("active");
+        islandContainer.style.opacity = "0";
         menuContainer.classList.remove("hidden");
         menuWrapper.classList.add("active");
       }, 600);
@@ -530,6 +531,7 @@ const createFontsList = function (fonts) {
 
     closeMenu() {
       menuContainer.classList.add("hidden");
+      islandContainer.style.opacity = "100";
       islandContainer.classList.remove("full-menu");
       islandContainer.classList.add("active");
 
