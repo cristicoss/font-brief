@@ -539,7 +539,10 @@ const createFontsList = function (fonts) {
       const childRect = islandContainer.getBoundingClientRect();
       if (parentRect.height > 96) {
         const parentRect = parentIsland.getBoundingClientRect();
-        const targetY = -(parentRect.height * 0.5 - 90);
+        let targetY = -(parentRect.height * 0.5 - 65);
+
+        if (islandContainer.classList.contains("grow"))
+          targetY = -(parentRect.height * 0.5 - 130);
 
         islandContainer.style.transform = `translateY(${-targetY}px)`;
       }
