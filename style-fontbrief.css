@@ -251,3 +251,16 @@ input[type="range"]::-moz-range-track {
   text-align: center;
   transition: all 0.3s ease;
 }
+
+.island-supreme_container {
+  pointer-events: none;
+  transition: padding 0.5s ease;
+}
+
+.island-supreme_container * {
+  pointer-events: auto;
+}
+
+.island-supreme_container.menu-state * {
+  pointer-events: auto;
+}

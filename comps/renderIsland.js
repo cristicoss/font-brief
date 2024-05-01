@@ -12,6 +12,7 @@ const filterSecondaryContainer = document.querySelector(
 const filterContainer = document.querySelectorAll(".filter_container");
 
 export default function showFilters() {
+  /*
   function fadeIsland(element) {
     element.classList.add("active");
   }
@@ -34,6 +35,7 @@ export default function showFilters() {
   );
 
   observer.observe(observedSection);
+  */
 
   function requestAnimationFrame() {
     setTimeout(islandContainer.classList.add("active"), 1000);

@@ -47,7 +47,8 @@ import {
   islandContainer,
   parentIsland,
   menuContainer,
-  menuWrapper,
+  islandParentContainer,
+  titlesWrapper,
 } from "./globalVars.js";
 
 let loadedFonts = [];
@@ -146,6 +147,20 @@ export class App {
     uniqueIndexBox.forEach(function (index) {
       self.store.clicks[index] = 2;
     });
+
+    window.onscroll = function () {
+      grow();
+    };
+
+    function grow() {
+      if (window.pageYOffset > 100) {
+        islandContainer.classList.remove("bigger");
+        titlesWrapper.classList.add("active");
+      } else {
+        islandContainer.classList.add("bigger");
+        titlesWrapper.classList.remove("active");
+      }
+    }
   }
 
   ////// Render list of fonts /////
@@ -517,16 +532,8 @@ const createFontsList = function (fonts) {
     },
 
     openMenu() {
-      // Open Full Menu
-      islandWrapper.classList.add("hidden");
-      islandContainer.classList.add("full-menu");
-      islandContainer.style.transform = "translateY(0)";
-      setTimeout(() => {
-        islandContainer.classList.remove("active");
-        islandContainer.style.opacity = "0";
-        menuContainer.classList.remove("hidden");
-        menuWrapper.classList.add("active");
-      }, 600);
+      islandContainer.classList.toggle("menu-state");
+      islandParentContainer.classList.toggle("menu-state");
     },
 
     closeMenu() {

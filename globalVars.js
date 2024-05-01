@@ -38,3 +38,7 @@ export const islandWrapper = document.querySelector(".island_wrapper");
 export const menuContainer = document.querySelector(".menu_container");
 export const menuWrapper = document.querySelector(".menu_wrapper");
 export const headlineWrapper = document.querySelector(".titles_wrapper");
+export const islandParentContainer = document.querySelector(
+  ".island-supreme_container"
+);
+export const titlesWrapper = document.querySelector(".titles_wrapper");
