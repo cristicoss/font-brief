@@ -167,6 +167,8 @@ export class App {
         titlesWrapper.classList.remove("active");
       }
     }
+
+    grow();
   }
 
   ////// Render list of fonts /////
@@ -546,30 +548,15 @@ const createFontsList = function (fonts) {
       fbNameIsland.classList.toggle("hidden");
       titlesWrapper.classList.toggle(".hidden");
       filtersContainer.classList.toggle("hidden");
-      menuBig.classList.toggle("hidden");
-      menuSmall.classList.toggle("hidden");
-    },
-
-    closeMenu() {
-      menuWrapper.classList.add("hidden");
-      islandContainer.style.opacity = "100";
-      islandContainer.classList.remove("full-menu");
-      islandContainer.classList.add("active");
-
-      const parentRect = parentIsland.getBoundingClientRect();
-      const childRect = islandContainer.getBoundingClientRect();
-      if (parentRect.height > 96) {
-        const parentRect = parentIsland.getBoundingClientRect();
-        let targetY = -(parentRect.height * 0.5 - 65);
-
-        if (islandContainer.classList.contains("grow"))
-          targetY = -(parentRect.height * 0.5 - 130);
-
-        islandContainer.style.transform = `translateY(${-targetY}px)`;
+      if (menuBig.classList.contains("hidden")) {
+        setTimeout(() => {
+          menuBig.classList.toggle("hidden");
+          menuSmall.classList.toggle("hidden");
+        }, 300);
+      } else {
+        menuBig.classList.toggle("hidden");
+        menuSmall.classList.toggle("hidden");
       }
-      setTimeout(() => {
-        islandWrapper.classList.remove("hidden");
-      }, 500);
     },
 
     updateList: new App(store),
