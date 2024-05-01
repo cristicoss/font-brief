@@ -264,3 +264,7 @@ input[type="range"]::-moz-range-track {
 .island-supreme_container.menu-state * {
   pointer-events: auto;
 }
+
+.hidden {
+  visibility: hidden;
+}

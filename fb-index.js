@@ -46,9 +46,15 @@ import {
   islandWrapper,
   islandContainer,
   parentIsland,
-  menuContainer,
+  menuBig,
+  menuSmall,
   islandParentContainer,
   titlesWrapper,
+  fbLogo1,
+  fbLogo2,
+  menuActionContainer,
+  fbNameIsland,
+  filtersContainer,
 } from "./globalVars.js";
 
 let loadedFonts = [];
@@ -534,10 +540,18 @@ const createFontsList = function (fonts) {
     openMenu() {
       islandContainer.classList.toggle("menu-state");
       islandParentContainer.classList.toggle("menu-state");
+      fbLogo1.classList.toggle("hidden");
+      fbLogo2.classList.toggle("hidden");
+      menuActionContainer.classList.toggle("hidden");
+      fbNameIsland.classList.toggle("hidden");
+      titlesWrapper.classList.toggle(".hidden");
+      filtersContainer.classList.toggle("hidden");
+      menuBig.classList.toggle("hidden");
+      menuSmall.classList.toggle("hidden");
     },
 
     closeMenu() {
-      menuContainer.classList.add("hidden");
+      menuWrapper.classList.add("hidden");
       islandContainer.style.opacity = "100";
       islandContainer.classList.remove("full-menu");
       islandContainer.classList.add("active");

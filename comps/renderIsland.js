@@ -1,4 +1,4 @@
-import { wrapper, headlineWrapper, islandContainer } from "../globalVars.js";
+import { islandContainer } from "../globalVars.js";
 
 const fbTitle = document.querySelector(".fb_name-big");
 const observedSection = document.querySelector(".section-observed");

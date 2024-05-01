@@ -36,9 +36,15 @@ export const parentIsland = document.querySelector(".parent");
 export const islandContainer = document.querySelector(".island_container");
 export const islandWrapper = document.querySelector(".island_wrapper");
 export const menuContainer = document.querySelector(".menu_container");
-export const menuWrapper = document.querySelector(".menu_wrapper");
-export const headlineWrapper = document.querySelector(".titles_wrapper");
+export const menuBig = document.querySelector(".menu-items-full");
+export const menuSmall = document.querySelector(".menu-items-down-full");
 export const islandParentContainer = document.querySelector(
   ".island-supreme_container"
 );
 export const titlesWrapper = document.querySelector(".titles_wrapper");
+export const fbLogo1 = document.querySelector(".island_logo-container");
+export const fbLogo2 = document.querySelector(".center-island_logo-container");
+export const fbNameIsland = document.querySelector(".fb_name-logo-grey");
+export const menuActionContainer = document.querySelector(
+  ".menu_action-container"
+);
