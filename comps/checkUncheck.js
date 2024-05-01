@@ -3,9 +3,10 @@ import { checkboxesContainer, allSubfilters } from "../globalVars.js";
 export default function _checkUncheck() {
   allSubfilters.forEach((subfilter) => {
     subfilter.addEventListener("click", (e) => {
-      const checkboxIndex = e.target.dataset?.index;
-      let atr = e.target.dataset?.atr;
-      let checkbox = e.target.querySelector(".filter_sans-check");
+      console.log(e.currentTarget);
+      const checkboxIndex = e.currentTarget.dataset?.index;
+      let atr = e.currentTarget.dataset?.atr;
+      let checkbox = e.currentTarget.querySelector(".filter_sans-check");
 
       if (checkbox.classList.contains("blue")) {
         checkbox.classList.remove("blue");
