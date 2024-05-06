@@ -1,18 +1,3 @@
-/* De pus in Webflow pt test
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.24.0"></script>
-<!--<script src="https://cristicoss.github.io/fontbrief-dynamic-list/fonts.js" defer></script>-->
-<!--<script src="https://hcxyoffxqkwbpmsktmub.supabase.co/storage/v1/object/public/test/fontbrief-dynamic-list_index.js?t=2023-10-19T15%3A51%3A54.042Z" defer></script>-->
-<!--<link rel="stylesheet" href="https://hcxyoffxqkwbpmsktmub.supabase.co/storage/v1/object/public/test/style-fontbrief.css?t=2023-10-19T15%3A52%3A54.648Z" defer>-->
-
-<script type="module" src="http://localhost:5500/fb-index.js" defer></script>
-<link rel="stylesheet" href="http://localhost:5500/style-fontbrief.css" defer>
-
-<script type="module" src="https://cristicoss.github.io/font-brief/fb-index.js" defer></script>
-<link rel="stylesheet" href="https://cristicoss.github.io/font-brief/style-fontbrief.css" defer>
-*/
-
-//// Trebuie sa schimb # cu & in url showFilters
-
 "use strict";
 import {
   createApp,
@@ -537,46 +522,6 @@ const createFontsList = function (fonts) {
         .querySelector(".newsletter_wrapper-fixed")
         .classList.add("active");
       this.store.subscribed = true;
-    },
-
-    openMenu() {
-      islandContainer.classList.toggle("menu-state");
-      islandParentContainer.classList.toggle("menu-state");
-      fbLogo1.classList.toggle("hidden");
-      fbLogo2.classList.toggle("hidden");
-      menuActionContainer.classList.toggle("hidden");
-      fbNameIsland.classList.toggle("hidden");
-      titlesWrapper.classList.toggle(".hidden");
-      filtersContainer.classList.toggle("hidden");
-      if (menuBig.classList.contains("hidden")) {
-        setTimeout(() => {
-          menuBig.classList.toggle("hidden");
-          menuSmall.classList.toggle("hidden");
-        }, 300);
-      } else {
-        menuBig.classList.toggle("hidden");
-        menuSmall.classList.toggle("hidden");
-      }
-    },
-
-    handleMenuItemsOver(event) {
-      console.log(event.currentTarget.classList[1]);
-      document
-        .querySelectorAll(`.${event.currentTarget.classList[0]}`)
-        .forEach((item) => {
-          item.classList.remove("text_black");
-          item.classList.add("text_dark-grey");
-        });
-      event.currentTarget.classList.add("text_black");
-    },
-
-    handleMenuItemsOut(event) {
-      document
-        .querySelectorAll(`.${event.currentTarget.classList[0]}`)
-        .forEach((item) => {
-          item.classList.remove("text_dark-grey");
-        });
-      event.currentTarget.classList.remove("text_black");
     },
 
     updateList: new App(store),

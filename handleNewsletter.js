@@ -5,5 +5,5 @@ export default function _newsletter() {
     document
       .querySelector(".newsletter_wrapper-fixed")
       .classList.remove("active");
-  }, 4000);
+  }, 60000);
 }
