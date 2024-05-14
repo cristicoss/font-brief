@@ -1,0 +1,199 @@
+.ease-all {
+  transition: all 0.3s ease;
+}
+
+.ease-fast {
+  transition: all 0.005s ease;
+}
+
+/* Initial state: invisible and fully transparent */
+.invisible-fade {
+  opacity: 0;
+  transition: opacity 0.2s ease-out; /* Smooth transition for fade-out */
+}
+
+/* Fade-in effect using keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Visible-fade class to apply the fade-in effect */
+.visiblefade {
+  animation: fadeIn 0.2s ease-out forwards; /* 'forwards' keeps the element visible after animation ends */
+}
+
+.fadein {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+  max-height: 0vh;
+}
+
+.fadeout {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+  max-height: 100vh; /* Set max-height to 100 viewport height units */
+}
+
+.fadein.active {
+  opacity: 1;
+  max-height: 100vh;
+}
+
+.fadeout.active {
+  opacity: 0;
+  max-height: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.menu-items.fadein.active {
+  opacity: 1;
+  max-height: 100vh;
+}
+
+/* ////////// Style for input range that controls the size //////// */
+
+/* General */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  width: 4rem;
+  height: 10px;
+}
+
+/* Track */
+input[type="range"]::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #4a4a4a;
+  height: 1px;
+}
+
+/* Handle */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: #4a4a4a;
+  border: none;
+  margin-top: -6px;
+  cursor: pointer;
+}
+
+/* Firefox */
+input[type="range"]::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #4a4a4a;
+  border: none;
+  margin-top: -6px;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-track {
+  background: #4a4a4a;
+  height: 1px;
+}
+
+.v-cloak {
+  display: none;
+}
+
+.placeholder_container {
+  animation: pulse 0.3s infinite;
+}
+
+.placeholder_container.loaded {
+  animation: none;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+.island_container {
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+
+  transition: transform 0.5s ease-out, height 0.5s ease-out, width 0.5s ease-out,
+    position 0.5s ease-out, align-items 0.2s;
+}
+
+.island_container.fadein.active {
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  transition: transform 0.5s ease-out, height 0.5s ease-out, width 0.5s ease-out,
+    position 0.5s ease-out, align-items 0.2s;
+}
+
+.island_container.fadein.active.grow {
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  transition: transform 0.5s ease-out, height 0.5s ease-out, width 0.5s ease-out,
+    position 0.5s ease-out;
+}
+
+.full-menu {
+  transition: transform 0.5s, height 0.5s ease-out, width 0.5s ease-out,
+    position 0.5s ease-out;
+}
+
+.grow {
+  transition: transform 0.5s, height 0.5s ease-out, width 0.5s ease-out,
+    position 0.5s ease-out, align-items 0.2s;
+}
+
+.island-test {
+  position: sticky;
+  top: 0;
+  width: 80rem;
+  background-color: #f1f1f1;
+  padding: 10px 0;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.menu-full {
+  position: fixed;
+  top: 0;
+  width: 70rem;
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.island-supreme_container {
+  pointer-events: none;
+  transition: padding 0.5s ease;
+}
+
+.island-supreme_container * {
+  pointer-events: auto;
+}
+
+.island-supreme_container.menu-state * {
+  pointer-events: auto;
+}
+
+.hidden {
+  visibility: hidden;
+}
