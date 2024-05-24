@@ -1,18 +1,3 @@
-/* De pus in Webflow pt test
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.24.0"></script>
-<!--<script src="https://cristicoss.github.io/fontbrief-dynamic-list/fonts.js" defer></script>-->
-<!--<script src="https://hcxyoffxqkwbpmsktmub.supabase.co/storage/v1/object/public/test/fontbrief-dynamic-list_index.js?t=2023-10-19T15%3A51%3A54.042Z" defer></script>-->
-<!--<link rel="stylesheet" href="https://hcxyoffxqkwbpmsktmub.supabase.co/storage/v1/object/public/test/style-fontbrief.css?t=2023-10-19T15%3A52%3A54.648Z" defer>-->
-
-<script type="module" src="http://localhost:5500/fb-index.js" defer></script>
-<link rel="stylesheet" href="http://localhost:5500/style-fontbrief.css" defer>
-
-<script type="module" src="https://cristicoss.github.io/font-brief/fb-index.js" defer></script>
-<link rel="stylesheet" href="https://cristicoss.github.io/font-brief/style-fontbrief.css" defer>
-*/
-
-//// Trebuie sa schimb # cu & in url showFilters
-
 "use strict";
 import {
   createApp,
@@ -421,7 +406,7 @@ const createFontsList = function (fonts) {
 
   createApp({
     store,
-    app: new App(store),
+
     match(index) {
       if (
         store.itemFlex === "grid" &&
@@ -577,28 +562,6 @@ const createFontsList = function (fonts) {
           item.classList.remove("text_dark-grey");
         });
       event.currentTarget.classList.remove("text_black");
-    },
-
-    openSearch() {
-      const searchContainer = document.querySelector(".search_container");
-      filtersContainer.classList.add("hidden");
-      searchContainer.classList.remove("hidden");
-    },
-    exitSearch() {
-      this.app._updateUrl(["x"], 12);
-      const searchField = document.querySelector(".search_field");
-      searchField.value = "";
-      const searchContainer = document.querySelector(".search_container");
-      islandContainer.classList.remove("search-state");
-      filtersContainer.classList.remove("hidden");
-      searchContainer.classList.add("hidden");
-    },
-    handleSearch(e) {
-      e.preventDefault();
-
-      // Call the _readUrl method
-      this.app._reset();
-      this.app._updateUrl([e.target.value], 12);
     },
 
     updateList: new App(store),

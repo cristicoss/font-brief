@@ -58,6 +58,10 @@ export default function _updateUrl(str, checkboxIndex) {
       name: "free",
       value: "",
     },
+    {
+      name: "search",
+      value: "",
+    },
   ];
 
   function updateQueryParam(key, value) {

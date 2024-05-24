@@ -38,6 +38,10 @@ export default function _filterFonts(urlParams) {
   wrkhrs ? (wrkhrs = wrkhrs[0].toUpperCase() + wrkhrs.slice(1)) : "";
   let free = urlParams.get("free");
 
+  let search = urlParams.get("search")
+    ? urlParams.get("search").toLowerCase()
+    : "";
+
   let pag = urlParams.get("pag") ? +urlParams.get("pag") : 1;
 
   const filteredFonts = this.store.sortedFonts.filter(
@@ -52,7 +56,9 @@ export default function _filterFonts(urlParams) {
       wrm.some((substring) => font.warm.includes(substring)) &&
       (!sans || font.sans?.includes(sans)) &&
       (!wrkhrs || font.workhorse?.includes(wrkhrs)) &&
-      (!free || font.free?.includes(free))
+      (!free || font.free?.includes(free)) &&
+      (font.Name.toLowerCase().includes(search) ||
+        font.foundry?.toLowerCase().includes(search))
   );
 
   this.store.counter = filteredFonts.length;
