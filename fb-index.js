@@ -581,9 +581,11 @@ const createFontsList = function (fonts) {
 
     openSearch() {
       const searchContainer = document.querySelector(".search_container");
+      islandContainer.classList.toggle("search-state");
       filtersContainer.classList.add("hidden");
       searchContainer.classList.remove("hidden");
     },
+
     exitSearch() {
       this.app._updateUrl(["x"], 12);
       const searchField = document.querySelector(".search_field");
