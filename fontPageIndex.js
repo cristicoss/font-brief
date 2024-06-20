@@ -155,7 +155,7 @@ async function init() {
       const translateX = function (amount) {
         if (container === "font-detail_wrapper") {
           store.currSmallSlide = currSlide;
-          sliderContainer.style.transform = `translateX(-${amount * 25}REM)`;
+          sliderContainer.style.transform = `translateX(-${amount * 28}REM)`;
           sliderBtn[currSlide].classList.add("blue");
         }
         if (container === "font-slide_container") {
