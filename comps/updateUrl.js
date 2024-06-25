@@ -66,7 +66,6 @@ export default function _updateUrl(str, checkboxIndex) {
 
   function updateQueryParam(key, value) {
     url.searchParams.set(key, value);
-
     if (value.endsWith("x")) {
       url.searchParams.delete(key);
     }

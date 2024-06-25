@@ -14,24 +14,23 @@ import {
 
 import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
 
+const urlParams = new URLSearchParams(window.location.search);
+
+const currFontName = urlParams.get("name");
+
 const url = window.location.href;
-const lastSegment = url.split("/").pop();
+const lastSegment = currFontName ? currFontName : url.split("/").pop();
 
-const bigSlider = document.querySelector(".font-slide_container");
-const smallSlider = document.querySelector(".font-detail_wrapper");
+console.log(lastSegment);
 
-const supabaseUrl1 =
-  "https://yununbjokononoevrwmu.supabase.co/rest/v1/fonts?select=*";
-const supabaseUrl2 =
-  "https://yununbjokononoevrwmu.supabase.co/rest/v1/fonts-details?select=*";
+const supabaseUrl = "https://yununbjokononoevrwmu.supabase.co";
 const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1bnVuYmpva29ub25vZXZyd211Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM0NDU3ODAsImV4cCI6MTk5OTAyMTc4MH0.FYWysDGuFY0-dehJD3aBYEbPLjWOcfzTC3yz0SrW-rE";
-const supabase1 = createClient(supabaseUrl1, supabaseKey);
-const supabase2 = createClient(supabaseUrl2, supabaseKey);
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function fetchdata() {
   try {
-    const { data, error } = await supabase1
+    const { data, error } = await supabase
       .from("fonts")
       .select("*")
       .eq("Slug", lastSegment);
@@ -47,7 +46,7 @@ async function fetchdata() {
 
 async function fetchImgDetails() {
   try {
-    const { data, error } = await supabase2
+    const { data, error } = await supabase
       .from("fonts-details")
       .select("*")
       .eq("name", lastSegment);
@@ -205,6 +204,20 @@ async function init() {
         item.style.width = store.sliderValue + "REM";
         console.log(store.sliderValue);
       });
+    },
+
+    addSlide(event) {
+      console.log(event.target.getAttribute("src"));
+      if (store.fontImgs.includes(event.target.getAttribute("src"))) return;
+      store.fontImgs.unshift(event.target.getAttribute("src"));
+
+      this.handleSlider(
+        0,
+        "slider_btn",
+        null,
+        store.currBigSlide,
+        "font-slide_container"
+      );
     },
 
     updateList: new App(store),

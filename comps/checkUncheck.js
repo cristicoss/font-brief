@@ -3,25 +3,29 @@ import { checkboxesContainer, allSubfilters } from "../globalVars.js";
 export default function _checkUncheck() {
   allSubfilters.forEach((subfilter) => {
     subfilter.addEventListener("click", (e) => {
-      console.log(e.currentTarget);
       const checkboxIndex = e.currentTarget.dataset?.index;
       let atr = e.currentTarget.dataset?.atr;
       let checkbox = e.currentTarget.querySelector(".filter_sans-check");
 
-      if (checkbox.classList.contains("blue")) {
-        checkbox.classList.remove("blue");
-        atr = "sansx";
-      }
-      if (atr === "sans") {
-        allSubfilters[1]
-          .querySelector(".filter_sans-check")
-          .classList.remove("blue");
-      }
-      if (atr === "serif") {
-        allSubfilters[0]
-          .querySelector(".filter_sans-check")
-          .classList.remove("blue");
-      }
+      // if (checkbox.classList.contains("blue")) {
+      //   console.log("blue");
+      //   // checkbox.classList.remove("blue");
+      //   // atr = "sansx";
+      // }
+
+      // checkbox.classList.remove("blue");
+      // atr = "freex";
+
+      // if (atr === "sans") {
+      //   allSubfilters[1]
+      //     .querySelector(".filter_sans-check")
+      //     .classList.remove("blue");
+      // }
+      // if (atr === "serif") {
+      //   allSubfilters[0]
+      //     .querySelector(".filter_sans-check")
+      //     .classList.remove("blue");
+      // }
 
       this._updateUrl([atr], +checkboxIndex);
     });

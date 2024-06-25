@@ -9,6 +9,7 @@
 
 <script type="module" src="https://cristicoss.github.io/font-brief/fb-index.js" defer></script>
 <link rel="stylesheet" href="https://cristicoss.github.io/font-brief/style-fontbrief.css" defer>
+checkUncheck.js
 */
 
 //// Trebuie sa schimb # cu & in url showFilters
@@ -450,7 +451,10 @@ const createFontsList = function (fonts) {
       return store.stylesIndex;
     },
 
-    handleSubfiltersClick() {},
+    handleSubfiltersClick() {
+      console.log("subfilter");
+      this.app._checkUncheck();
+    },
 
     handleClick(event) {
       this.store.divIndex = parseInt(event.target.getAttribute("data-atr"));
