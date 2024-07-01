@@ -69,7 +69,7 @@ export class App {
   _writeDescription() {
     const description = document.getElementById("description");
     description.innerHTML =
-      this.store.currFont.Description.slice(0, 350) + "...";
+      this.store.currFont.Description.slice(0, 170) + "...";
   }
 }
 
@@ -77,7 +77,7 @@ async function init() {
   const fontData = await fetchdata();
   const fontImgDetails = await fetchImgDetails();
 
-  console.log(fontData);
+  console.log(fontData?.font_name);
 
   if (!fontData) {
     console.log("No fonts available");
@@ -94,6 +94,7 @@ async function init() {
       fontImgDetails.detail3,
       fontImgDetails.detail4,
       fontImgDetails.detail5,
+      fontImgDetails.detail6,
     ],
 
     currBigSlide: 0,
@@ -154,7 +155,7 @@ async function init() {
       const translateX = function (amount) {
         if (container === "font-detail_wrapper") {
           store.currSmallSlide = currSlide;
-          sliderContainer.style.transform = `translateX(-${amount * 28}REM)`;
+          sliderContainer.style.transform = `translateX(-${amount * 100}%)`;
           sliderBtn[currSlide].classList.add("blue");
         }
         if (container === "font-slide_container") {
@@ -183,18 +184,41 @@ async function init() {
       }
     },
 
-    handleFullScreen(s) {
-      document
-        .querySelector(".controls_wrapper")
-        .classList.toggle("opacity-zero");
+    handleFullScreen(value) {
+      if (value) {
+        document
+          .querySelector(".controls_wrapper")
+          .classList.remove("opacity-zero");
+        document
+          .querySelector(".controls_wrapper")
+          .classList.add("opacity-zero");
 
-      document
-        .querySelector(".font-info_container")
-        .classList.toggle("opacity-zero");
+        document
+          .querySelector(".font-info_container")
+          .classList.remove("opacity-zero");
+        document
+          .querySelector(".font-info_container")
+          .classList.add("opacity-zero");
 
-      document
-        .querySelector(".island_pre-container")
-        .classList.toggle("opacity-zero");
+        document
+          .querySelector(".island_pre-container")
+          .classList.remove("opacity-zero");
+        document
+          .querySelector(".island_pre-container")
+          .classList.add("opacity-zero");
+      } else {
+        document
+          .querySelector(".controls_wrapper")
+          .classList.remove("opacity-zero");
+
+        document
+          .querySelector(".font-info_container")
+          .classList.remove("opacity-zero");
+
+        document
+          .querySelector(".island_pre-container")
+          .classList.remove("opacity-zero");
+      }
     },
 
     handleFontSize(e) {
