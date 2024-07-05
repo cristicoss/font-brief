@@ -28,7 +28,7 @@ const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1bnVuYmpva29ub25vZXZyd211Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM0NDU3ODAsImV4cCI6MTk5OTAyMTc4MH0.FYWysDGuFY0-dehJD3aBYEbPLjWOcfzTC3yz0SrW-rE";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-async function fetchdata() {
+async function fetchedFont() {
   try {
     const { data, error } = await supabase
       .from("fonts")
@@ -44,7 +44,7 @@ async function fetchdata() {
   }
 }
 
-async function fetchImgDetails() {
+async function fetchedImgDetails() {
   try {
     const { data, error } = await supabase
       .from("fonts-details")
@@ -74,8 +74,8 @@ export class App {
 }
 
 async function init() {
-  const fontData = await fetchdata();
-  const fontImgDetails = await fetchImgDetails();
+  const fontData = await fetchedFont();
+  const fontImgDetails = await fetchedImgDetails();
 
   console.log(fontData?.font_name);
 
@@ -84,7 +84,7 @@ async function init() {
     return;
   }
 
-  //Petie Vue
+  //Petie Vue fonts
   const store = reactive({
     currFont: fontData,
     fontImgs: [fontData.font_name, fontData.Pangram, fontData.Paragraph],
