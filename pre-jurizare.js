@@ -17,6 +17,8 @@ import {
   fetchedHeaderImg,
   supabase,
 } from "./apiFonts.js";
+
+import fetchAll from "./fetchAll.js";
 import { _showItemsWithFadeIn } from "./comps/renderFonts.js";
 import { _paginate, _pagBtnHandler } from "./comps/pagHandler.js";
 import { _handleListView } from "./comps/handleListView.js";
@@ -47,70 +49,6 @@ import {
   fbNameIsland,
   filtersContainer,
 } from "./globalVars.js";
-
-async function fetchHeader() {
-  try {
-    const { data, error } = await supabase
-      .from("header-imgs")
-      .select("*")
-      .order("updated_at", { ascending: false })
-      .limit(1);
-
-    if (error) throw error;
-
-    return data.length ? data[0] : null;
-  } catch (error) {
-    console.error("Failed to fetch font:", error);
-    return null; // Return an empty array or suitable default in case of failure
-  }
-}
-
-let loadedFonts = [];
-let promotedFontsIds = [];
-
-async function allFetchedFonts() {
-  try {
-    const data = await fetchedFonts;
-    const dataPromoted = await fetchedPromotedFonts;
-    loadedFonts.push(...data);
-    dataPromoted.forEach((el) => promotedFontsIds.push(el.id));
-
-    ///// create font list with promo first followed by new fonts /////
-
-    const isPromoted = (font) => promotedFontsIds.includes(font.id);
-
-    // Separate promoted fonts from non-promoted fonts
-    const promotedFonts = loadedFonts.filter((font) => isPromoted(font));
-    const nonPromotedFonts = loadedFonts.filter((font) => !isPromoted(font));
-
-    // Sort non-promoted fonts by created_at in descending order
-    const sortedNonPromotedFonts = nonPromotedFonts.sort(
-      (a, b) => new Date(b.created_at) - new Date(a.created_at)
-    );
-
-    const randomizedNonPromotedFonts = sortedNonPromotedFonts
-      .slice(2)
-      .sort(() => Math.random() - 0.5);
-    // Insert promoted fonts at the 3rd and 4th positions
-    const sortedFonts = [
-      ...sortedNonPromotedFonts.slice(0, 2), // First two non-promoted fonts
-      ...promotedFonts, // Promoted fonts
-      ...randomizedNonPromotedFonts, // Remaining non-promoted fonts
-    ];
-    // end //
-
-    sortedFonts[0].new = true;
-    sortedFonts[1].new = true;
-    sortedFonts[2].promoted = true;
-    sortedFonts[3].promoted = true;
-    sortedFonts[4].new = true;
-    sortedFonts[5].new = true;
-
-    return sortedFonts;
-  } catch (error) {
-    console.error("Error while fetching fonts data:", error);
-  }
-}
 
 export class App {
   // fonts = fonts;
@@ -146,8 +84,17 @@ export class App {
     this._setClicks();
 
     this._handleListView(store);
-    this._handleNewsletter();
+    // this._handleNewsletter();
     this._getRealtimeChanges();
+
+    window.addEventListener("online", () => {
+      console.log("Network connection restored. Reconnecting...");
+      this._getRealtimeChanges();
+    });
+
+    window.addEventListener("offline", () => {
+      console.log("Network connection lost. Waiting to reconnect...");
+    });
   }
 
   async _getRealtimeChanges() {
@@ -240,15 +187,18 @@ export class App {
 }
 
 const createFontsList = async function () {
-  const fonts = await allFetchedFonts();
-  const headerImg = await fetchHeader();
-  console.log(headerImg["name"]);
+  const [allFonts, promo1, promo2, new1, new2, headerImg] = await fetchAll();
+  console.log(allFonts);
   //Petie Vue
   const store = reactive({
     islandAtTop: false,
-    sortedFonts: fonts,
+    promo1: promo1,
+    promo2: promo2,
+    new1: new1,
+    new2: new2,
+    sortedFonts: allFonts,
     headerImg: headerImg,
-    fonts: fonts.slice(0, 5),
+    fonts: allFonts.slice(0, 5),
     counter: 0,
     listType: false,
     gridType: true,
@@ -671,7 +621,8 @@ const createFontsList = async function () {
       popUp.classList.add("hidden");
     },
 
-    handleChangeHeader() {
+    handleChangeHeader(event) {
+      event.preventDefault();
       _uploadImgs(store);
     },
 
