@@ -622,7 +622,7 @@ const createFontsList = async function () {
     },
 
     handleChangeHeader(event) {
-      event.preventDefault();
+      // event.preventDefault();
       _uploadImgs(store);
     },
 
