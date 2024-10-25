@@ -31,7 +31,8 @@ import _readUrl from "./comps/readUrl.js";
 import _filterFonts from "./comps/filterFonts.js";
 import _pausePromoSection from "./comps/promo-section.js";
 import _newsletter from "./handleNewsletter.js";
-import _uploadImgs from "./jurizare/uploadImgs.js";
+import _uploadImgs from "./jurizare/uploadHeaderImgs.js";
+import _createFont from "./jurizare/createNewFont.js";
 
 import {
   resetBtn,
@@ -624,6 +625,11 @@ const createFontsList = async function () {
     handleChangeHeader(event) {
       // event.preventDefault();
       _uploadImgs(store);
+    },
+
+    handleCreateFont(newFontName) {
+      console.log(newFontName);
+      _createFont(store, newFontName);
     },
 
     app: new App(store),

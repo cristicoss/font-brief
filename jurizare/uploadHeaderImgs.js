@@ -4,8 +4,6 @@ async function uploadImgs(store) {
   const nameInput = document.getElementById("name-header-font");
   const foundryInput = document.getElementById("foundry");
   console.log(nameInput, foundryInput);
-  const fileInput = document.getElementById("file-input");
-  const file = fileInput.files[0];
   let name = nameInput.value;
   let foundry = foundryInput.value;
   let fileKey = "";
@@ -25,8 +23,10 @@ async function uploadImgs(store) {
     foundry = foundryInput.value;
   };
 
+  // Upload the file to Supabase storage
+  const fileInput = document.getElementById("file-input");
+  const file = fileInput.files[0];
   if (file) {
-    // Upload the file to Supabase storage
     const { data: uploadData, error: uploadError } = await supabase.storage
       .from("header-imgs")
       .upload(fileKey, file, {
