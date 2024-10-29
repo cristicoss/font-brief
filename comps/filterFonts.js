@@ -46,14 +46,14 @@ export default function _filterFonts(urlParams) {
 
   const filteredFonts = this.store.sortedFonts.filter(
     (font) =>
-      elgnt.some((substring) => font.elegant.includes(substring)) &&
-      expr.some((substring) => font.expressive.includes(substring)) &&
-      frndl.some((substring) => font.friendly.includes(substring)) &&
-      orgnc.some((substring) => font.organic.includes(substring)) &&
-      prgrssv.some((substring) => font.progressive.includes(substring)) &&
-      drng.some((substring) => font.daring.includes(substring)) &&
-      dscrt.some((substring) => font.discreet.includes(substring)) &&
-      wrm.some((substring) => font.warm.includes(substring)) &&
+      elgnt.some((substring) => font.elegant?.includes(substring)) &&
+      expr.some((substring) => font.expressive?.includes(substring)) &&
+      frndl.some((substring) => font.friendly?.includes(substring)) &&
+      orgnc.some((substring) => font.organic?.includes(substring)) &&
+      prgrssv.some((substring) => font.progressive?.includes(substring)) &&
+      drng.some((substring) => font.daring?.includes(substring)) &&
+      dscrt.some((substring) => font.discreet?.includes(substring)) &&
+      wrm.some((substring) => font.warm?.includes(substring)) &&
       (!sans || font.sans?.includes(sans)) &&
       (!wrkhrs || font.workhorse?.includes(wrkhrs)) &&
       (!free || font.free?.includes(free)) &&
