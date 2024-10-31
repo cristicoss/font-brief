@@ -197,3 +197,7 @@ input[type="range"]::-moz-range-track {
 .hidden {
   visibility: hidden;
 }
+
+.contenteditable:focus {
+  outline: 1px solid #d7d7d7;
+}

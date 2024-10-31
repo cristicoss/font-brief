@@ -17,6 +17,8 @@ import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
 const urlParams = new URLSearchParams(window.location.search);
 
 const currFontName = urlParams.get("name");
+const moreInfoBtn = document.getElementById("more-info");
+const fontInfoContainer = document.querySelector(".font-info_cell-info");
 
 const url = window.location.href;
 const lastSegment = currFontName ? currFontName : url.split("/").pop();
@@ -69,8 +71,15 @@ export class App {
 
   _writeDescription() {
     const description = document.getElementById("description");
-    description.innerHTML =
-      this.store.currFont.Description?.slice(0, 170) + "...";
+    console.log(this.store.currFont.Description?.length);
+    if (this.store.currFont.Description?.length > 170) {
+      description.innerHTML =
+        this.store.currFont.Description?.slice(0, 170) + "...";
+      moreInfoBtn.classList.remove("hidden");
+    }
+    if (this.store.currFont.Description?.length <= 170) {
+      description.innerHTML = this.store.currFont.Description;
+    }
   }
 }
 
@@ -101,6 +110,7 @@ async function init() {
     currBigSlide: 0,
     currSmallSlide: 0,
     sliderValue: 54,
+    countMoreInfo: 0,
 
     resetSlider(e) {
       store.sliderValue = 54;
@@ -243,6 +253,22 @@ async function init() {
         store.currBigSlide,
         "font-slide_container"
       );
+    },
+
+    handleMoreInfo(event) {
+      store.countMoreInfo++;
+      if (store.countMoreInfo === 1) {
+        description.innerHTML = store.currFont.Description;
+        event.target.innerHTML = "Less";
+        fontInfoContainer.classList.add("height-auto");
+      }
+      if (store.countMoreInfo === 2) {
+        store.countMoreInfo = 0;
+        description.innerHTML =
+          store.currFont.Description?.slice(0, 170) + "...";
+        event.target.innerHTML = "More";
+        fontInfoContainer.classList.remove("height-auto");
+      }
     },
 
     updateList: new App(store),

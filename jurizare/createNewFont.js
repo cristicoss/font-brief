@@ -30,6 +30,10 @@ async function createFont(store, name) {
               "https://yununbjokononoevrwmu.supabase.co/storage/v1/object/public/font-imgs/placeholders/Pangram.svg?t=2024-10-29T16%3A48%3A40.255Z",
             Paragraph:
               "https://yununbjokononoevrwmu.supabase.co/storage/v1/object/public/font-imgs/placeholders/Paragraph.svg?t=2024-10-29T16%3A48%3A50.002Z",
+            foundry: "Mystic Glyphs Collective",
+            weights: "1 big ass weight",
+            Description:
+              "Currently manifesting its final form, this font awaits true details. An enigmatic placeholder, here to hint at elegance and style… or something like that.",
           },
         ]);
 

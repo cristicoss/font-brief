@@ -15,10 +15,12 @@ import {
 import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
 
 import _uploadAnyImg from "./jurizare/changeAnyImg.js";
+import changeAnyText from "./jurizare/changeAnyText.js";
 
 const urlParams = new URLSearchParams(window.location.search);
 
 const currFontName = urlParams.get("name").toLowerCase();
+const moreInfoBtn = document.getElementById("more-info");
 
 const url = window.location.href;
 const lastSegment = currFontName ? currFontName : url.split("/").pop();
@@ -71,8 +73,15 @@ export class App2 {
 
   _writeDescription() {
     const description = document.getElementById("description");
-    description.innerHTML =
-      this.store.currFont.Description?.slice(0, 170) + "...";
+    console.log(this.store.currFont.Description?.length);
+    if (this.store.currFont.Description?.length > 170) {
+      description.innerHTML =
+        this.store.currFont.Description?.slice(0, 170) + "...";
+      moreInfoBtn.classList.remove("hidden");
+    }
+    if (this.store.currFont.Description?.length <= 170) {
+      description.innerHTML = this.store.currFont.Description;
+    }
   }
 
   _getRealtimeChanges() {
@@ -176,12 +185,15 @@ async function init() {
       [fontImgDetails?.detail6, "detail6"],
     ],
 
+    fontDescription: fontData.Description?.slice(0, 170) + "...",
+
     currBigSlide: 0,
     currSmallSlide: 0,
     sliderValue: 54,
     imgToChange: "",
     imgIndexToChange: 0,
     imgStorageToChange: "",
+    countMoreInfo: 0,
 
     resetSlider(e) {
       store.sliderValue = 54;
@@ -348,6 +360,33 @@ async function init() {
         store.imgStorageToChange,
         store
       );
+    },
+
+    handleChangeText(table, column, field, event) {
+      if (
+        event.type === "blur" ||
+        (event.type === "keydown" && event.key === "Enter")
+      ) {
+        event.preventDefault();
+        const content = event.target.innerText.trim();
+        console.log(table, column, content, currFontName);
+        console.log(`Field: ${field}, Content: ${content}`);
+        changeAnyText(table, column, content, currFontName);
+      }
+    },
+
+    handleMoreInfo(event) {
+      store.countMoreInfo++;
+      if (store.countMoreInfo === 1) {
+        description.innerHTML = store.currFont.Description;
+        event.target.innerHTML = "Less";
+      }
+      if (store.countMoreInfo === 2) {
+        store.countMoreInfo = 0;
+        description.innerHTML =
+          store.currFont.Description?.slice(0, 170) + "...";
+        event.target.innerHTML = "More";
+      }
     },
 
     updateList: new App2(store),
