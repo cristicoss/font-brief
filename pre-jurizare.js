@@ -5,7 +5,7 @@ import {
   nextTick,
 } from "./petite-vue/dist/petite-vue.es.js";
 
-// const { createApp, reactive, nextTick } = petite;
+// const { createApp, reactive, nextTick } = petite; console
 
 import showFilters from "./comps/renderIsland.js";
 
@@ -33,6 +33,7 @@ import _pausePromoSection from "./comps/promo-section.js";
 import _newsletter from "./handleNewsletter.js";
 import _uploadImgs from "./jurizare/uploadHeaderImgs.js";
 import _createFont from "./jurizare/createNewFont.js";
+import _changePromoFonts from "./jurizare/changePromoFonts.js";
 
 import {
   resetBtn,
@@ -70,6 +71,7 @@ export class App {
     this._setClicks = this._setClicks.bind(this);
     this._handleNewsletter = _newsletter;
     this._uploadImgs = _uploadImgs;
+    this._changePromoFonts = _changePromoFonts;
 
     this.store = store;
 
@@ -101,11 +103,7 @@ export class App {
   async _getRealtimeChanges() {
     // Create a function to handle inserts
     const handleChange = (payload) => {
-      console.log("Change received!", payload);
-      console.log(this.store.headerImg.image_url);
       this.store.headerImg = payload.new;
-      console.log(this.store.headerImg.name);
-      // this.store.headerImg = payload.new.image_url;
     };
 
     // Listen to inserts
@@ -127,6 +125,38 @@ export class App {
         handleChange
       )
       .subscribe();
+
+    /*
+    // Listen to changes to promoted fonts
+    const handleChangePromo = (payload) => {
+      console.log("Change received!", payload);
+      this.store.promo1 = this.store.sortedFonts.find((font) =>
+        font.Slug.includes(payload.new.Name)
+      );
+
+      console.log(payload.new.);
+    };
+
+    // Listen to inserts
+    supabase
+      .channel("promoted")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "promoted" },
+        handleChangePromo
+      )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "promoted" },
+        handleChangePromo
+      )
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "promoted" },
+        handleChangePromo
+      )
+      .subscribe();
+      */
   }
 
   _setClicks() {
@@ -189,7 +219,7 @@ export class App {
 
 const createFontsList = async function () {
   const [allFonts, promo1, promo2, new1, new2, headerImg] = await fetchAll();
-  console.log(allFonts);
+
   //Petie Vue
   const store = reactive({
     islandAtTop: false,
@@ -200,10 +230,13 @@ const createFontsList = async function () {
     sortedFonts: allFonts,
     headerImg: headerImg,
     fonts: allFonts.slice(0, 5),
+    promoFontList: allFonts,
     counter: 0,
     listType: false,
     gridType: true,
     columnType: false,
+    promoFontListArray: allFonts.map((font) => font.Slug),
+    promoName: "",
 
     subfilter: "",
 
@@ -222,6 +255,35 @@ const createFontsList = async function () {
       };
     },
 
+    listenSupaPromoChanges(field) {
+      const handleChangePromo = (payload) => {
+        console.log("Change received!", payload, field);
+        store[field] = store.sortedFonts.find((font) =>
+          font.Slug.includes(payload.new.Name)
+        );
+      };
+
+      // Listen to inserts
+      supabase
+        .channel("promoted")
+        .on(
+          "postgres_changes",
+          { event: "INSERT", schema: "public", table: "promoted" },
+          handleChangePromo
+        )
+        .on(
+          "postgres_changes",
+          { event: "DELETE", schema: "public", table: "promoted" },
+          handleChangePromo
+        )
+        .on(
+          "postgres_changes",
+          { event: "UPDATE", schema: "public", table: "promoted" },
+          handleChangePromo
+        )
+        .subscribe();
+    },
+
     handleSubFilters(subFilter) {
       store.subfilter = subFilter;
       console.log(store.subfilter);
@@ -230,6 +292,14 @@ const createFontsList = async function () {
     resetSlider(e) {
       store.sliderValue = 90;
       store.loadImgs();
+    },
+
+    handleSearchPromoFont(field, event) {
+      console.log(this.promoFontList);
+      const content = event.target.innerText.trim();
+      this.promoFontListArray = allFonts
+        .map((font) => font.Name)
+        .filter((font) => font.toLowerCase().includes(content.toLowerCase()));
     },
 
     removePlaceholder() {
@@ -611,15 +681,35 @@ const createFontsList = async function () {
       icon.classList.add("hidden");
     },
 
-    openPopUp(id) {
+    openPopUp(id, promoName = "") {
+      if (promoName !== "") {
+        store.promoName = promoName;
+      }
       const popUp = document.querySelector(`.${id}`);
-      console.log(popUp);
       if (popUp.classList.contains("hidden")) {
         popUp.classList.remove("hidden");
+        // document.body.classList.add("freeze");
         return;
       }
 
       popUp.classList.add("hidden");
+      // document.body.classList.remove("freeze");
+    },
+
+    handleSetPromoFont(fontName) {
+      const popUp = document.querySelector(`.form-promo_container`);
+
+      _changePromoFonts(store.promoName, fontName);
+      store.listenSupaPromoChanges(store.promoName);
+      popUp.classList.add("hidden");
+    },
+
+    handleSearchPromoFont(field, event) {
+      console.log(this.promoFontList);
+      const content = event.target.innerText.trim();
+      store.promoFontListArray = allFonts
+        .map((font) => font.Slug)
+        .filter((font) => font.toLowerCase().includes(content.toLowerCase()));
     },
 
     handleChangeHeader(event) {

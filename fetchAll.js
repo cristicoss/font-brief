@@ -3,7 +3,7 @@ const fetchAll = async function () {
   try {
     const [fonts, promotedFonts, headerImg] = await Promise.all([
       supabase.from("fonts").select("*"),
-      supabase.from("promoted_fonts").select("*"),
+      supabase.from("promoted").select("*"),
       supabase
         .from("header-imgs")
         .select("*")
@@ -19,20 +19,23 @@ const fetchAll = async function () {
     let promo2;
     let new1;
     let new2;
+    console.log(promotedFonts);
     fonts.data.forEach((font) => {
-      if (font.id === promotedFonts.data[0].id) {
+      if (font.Slug === promotedFonts.data[0].Name) {
         promo1 = font;
+        console.log(font);
       }
-      if (font.id === promotedFonts.data[1].id) {
+      if (font.Slug === promotedFonts.data[1].Name) {
         promo2 = font;
       }
-      if (font.id === promotedFonts.data[2].id) {
+      if (font.Slug === promotedFonts.data[2].Name) {
         new1 = font;
       }
-      if (font.id === promotedFonts.data[3].id) {
+      if (font.Slug === promotedFonts.data[3].Name) {
         new2 = font;
       }
     });
+    console.log(promo1, promo2, new1, new2);
 
     const filteredFonts = fonts.data.filter(
       (font) => font.id !== promo1.id && font.id !== promo2.id
