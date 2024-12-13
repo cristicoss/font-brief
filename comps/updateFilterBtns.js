@@ -1,5 +1,4 @@
 export default function _updateFilters(urlParams) {
-  console.log("Updating filters...", urlParams);
   if (urlParams.size === 0) {
     document.querySelectorAll(".filter_box").forEach((box) => {
       box.classList.remove("blue");

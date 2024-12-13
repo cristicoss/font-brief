@@ -1,9 +1,3 @@
-// Immediately-invoked function expression to fetch data
-
-// import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
-console.log(window.supabase); // This should print the Supabase object to the console
-
-// Or, for CDN (global `window.supabase`):
 const { createClient } = window.supabase;
 
 // Initialize Supabase client
@@ -57,39 +51,4 @@ const fetchedHeaderImg = (async () => {
   }
 })();
 
-/*
-const fetchedFont = (async () => {
-  try {
-    const { data, error } = await supabase
-      .from("fonts")
-      .select("*")
-      .eq("Slug", lastSegment);
-
-    if (error) throw error;
-
-    return data.length ? data[0] : null;
-  } catch (error) {
-    console.error("Failed to fetch font:", error);
-    return null; // Return an empty array or suitable default in case of failure
-  }
-})();
-
-const fetchedImgDetails = (async () => {
-  try {
-    const { data, error } = await supabase
-      .from("fonts-details")
-      .select("*")
-      .eq("name", lastSegment);
-
-    if (error) throw error;
-
-    return data.length ? data[0] : null;
-  } catch (error) {
-    console.error("Failed to fetch font:", error);
-    return null; // Return an empty array or suitable default in case of failure
-  }
-})();
-*/
-
-// export default fetchedFonts;
 export { fetchedFonts, fetchedPromotedFonts, fetchedHeaderImg, supabase };

@@ -65,6 +65,8 @@ import {
   handleMenuItemsOver,
   handleMenuItemsOut,
   openPopUp,
+  handleSetFontSize,
+  showHandles,
 } from "./comps/genericFunctions.js";
 
 await listenSupaPromoChanges("promo1");
@@ -106,10 +108,12 @@ createApp({
   //////// handle Font List ////////
   handleMouseOverFont(event, fontName, index) {
     handleMouseOverFont(event, fontName, index);
+    showHandles(event);
   },
 
   handleMouseLeaveFont(event) {
     handleMouseLeaveFont(event);
+    showHandles(event);
   },
 
   match(index) {
@@ -177,6 +181,10 @@ createApp({
 
   handleFontSize(event) {
     handleFontSize(event);
+  },
+
+  handleSetFontSize(e) {
+    handleSetFontSize(e);
   },
 
   handleNewsletter() {

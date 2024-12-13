@@ -28,7 +28,6 @@ const _showItemsWithFadeIn = function () {
   loadingContainer.classList.add("hidden");
   // list.classList.remove("hidden");
   fontItem.forEach((item) => {
-    console.log(item);
     const index = item.dataset.index;
 
     item.classList.remove("visible");
@@ -39,7 +38,6 @@ const _showItemsWithFadeIn = function () {
 };
 
 const _renderFonts = async function (fonts, itemsPerPage) {
-  console.log("render");
   store.fonts = fonts.slice(0, itemsPerPage);
 
   const fontItem = document.querySelectorAll(".font-list_item");

@@ -13,6 +13,7 @@ import {
 } from "../globalVars.js";
 
 import { store } from "../store.js";
+import changeAnyText from "../jurizare/changeAnyText.js";
 
 const openMenu = function () {
   islandContainer.classList.toggle("menu-state");
@@ -78,7 +79,7 @@ const handleColorChange = function (event) {
 };
 
 const handleFontSize = function (event) {
-  if (event) store.sliderValue = event.target.value / 60;
+  if (event) store.sliderValue = event.target.value / 100;
 };
 
 const handleNewsletter = function () {
@@ -99,6 +100,63 @@ const handleMoreInfo = function (event, store) {
   }
 };
 
+const handleSetFontSize = function (e) {
+  const imageContainer = e.target.closest(".font_image-wrapper");
+
+  const draggableImage = imageContainer.querySelector(".font_image-crop");
+  const currFontName = draggableImage.getAttribute("alt").toLowerCase();
+
+  let isResizing = false;
+  let initialContainerWidth = 0;
+  let originalWidth, originalHeight, originalX, originalY;
+
+  isResizing = true;
+  initialContainerWidth = imageContainer.offsetWidth; // Store initial width
+  console.log(initialContainerWidth, imageContainer.offsetWidth);
+  originalWidth = draggableImage.offsetWidth;
+  originalHeight = draggableImage.offsetHeight;
+  originalX = e.clientX;
+  originalY = e.clientY;
+  e.preventDefault();
+
+  document.addEventListener("mousemove", (e) => {
+    if (!isResizing) return;
+
+    const deltaX = e.clientX - originalX;
+    const newWidth = originalWidth + deltaX;
+
+    // Update image container width while keeping aspect ratio
+    const aspectRatio =
+      draggableImage.naturalHeight / draggableImage.naturalWidth;
+    draggableImage.style.width = `${newWidth}px`;
+    draggableImage.style.height = `${newWidth * aspectRatio}px`;
+  });
+
+  document.addEventListener("mouseup", () => {
+    if (isResizing) {
+      isResizing = false;
+
+      // Calculate and store width as percentage of the parent container width
+      const widthPercentage = (
+        (draggableImage.offsetWidth / initialContainerWidth) *
+        100
+      ).toFixed(2);
+      console.log(`Image Width Percentage: ${widthPercentage}%`);
+
+      // Optional: Store in local storage or use as needed
+      localStorage.setItem("imageWidthPercentage", widthPercentage);
+
+      changeAnyText("fonts", "imgsize", widthPercentage, currFontName);
+    }
+  });
+};
+
+const showHandles = function (e) {
+  e.preventDefault();
+  const handleContainer = e.target.querySelector(".resize-handles_container");
+  handleContainer.classList.toggle("hidden");
+};
+
 export {
   openMenu,
   handleMenuItemsOver,
@@ -108,4 +166,6 @@ export {
   handleFontSize,
   handleNewsletter,
   handleMoreInfo,
+  handleSetFontSize,
+  showHandles,
 };

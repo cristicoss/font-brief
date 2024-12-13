@@ -33,8 +33,7 @@ export default function _filterFonts(urlParams) {
     : "";
 
   let pag = urlParams.get("pag") ? +urlParams.get("pag") : 1;
-  if (store.sortedFonts) console.log(store.sortedFonts[0], expr);
-  if (!store.sortedFonts) console.log(store.sortedFonts[0], expr);
+
   const filteredFonts = store.sortedFonts.filter(
     (font) =>
       font.expr &&
@@ -67,7 +66,6 @@ export default function _filterFonts(urlParams) {
       (font.Name.toLowerCase().includes(search) ||
         font.foundry?.toLowerCase().includes(search))
   );
-  console.log(filteredFonts);
 
   store.counter = filteredFonts.length;
   _renderFonts(filteredFonts, 50);

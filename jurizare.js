@@ -55,9 +55,6 @@ const requiredParams = [
 
 const url = window.location.href;
 const setFiltersBtn = document.querySelector(".set-filters_btn");
-console.log(setFiltersBtn);
-
-console.log(store2.currFont);
 
 createApp({
   store2,

@@ -19,23 +19,23 @@ const fetchAll = async function () {
     let promo2;
     let new1;
     let new2;
-    console.log(promotedFonts);
+
+    promotedFonts.data.sort((a, b) => a.id - b.id);
+
     fonts.data.forEach((font) => {
-      if (font.Slug === promotedFonts.data[2].Name) {
+      if (font.Slug === promotedFonts.data[0].Name) {
         promo1 = font;
-        console.log(font);
-      }
-      if (font.Slug === promotedFonts.data[3].Name) {
-        promo2 = font;
       }
       if (font.Slug === promotedFonts.data[1].Name) {
+        promo2 = font;
+      }
+      if (font.Slug === promotedFonts.data[2].Name) {
         new1 = font;
       }
-      if (font.Slug === promotedFonts.data[0].Name) {
+      if (font.Slug === promotedFonts.data[3].Name) {
         new2 = font;
       }
     });
-    console.log(promo1, promo2, new1, new2);
 
     const filteredFonts = fonts.data.filter(
       (font) => font.id !== promo1.id && font.id !== promo2.id
@@ -49,7 +49,6 @@ const fetchAll = async function () {
     firstSixFonts.forEach((font) => {
       font.new = true;
     });
-    console.log(firstSixFonts);
 
     promo1.promoted = true;
     promo2.promoted = true;
@@ -80,7 +79,6 @@ const fetchedFont = async function () {
       .eq("Slug", currFontName);
 
     if (error) throw error;
-    console.log(currFontName);
     return data.length ? data[0] : null;
   } catch (error) {
     console.error("Failed to fetch font:", error);

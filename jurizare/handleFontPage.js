@@ -9,7 +9,6 @@ const setFiltersBtn = document.querySelector(".set-filters_btn");
 
 const _writeDescription = function () {
   const description = document.getElementById("description");
-  console.log(store2.currFont.Description?.length);
   if (store2.currFont.Description?.length > 170) {
     description.innerHTML = store2.currFont.Description?.slice(0, 170) + "...";
     moreInfoBtn.classList.remove("hidden");
@@ -144,8 +143,6 @@ const handleSlider = function (index, btn, direction, currSlide, container) {
 };
 
 const _getRealtimeChanges = async function () {
-  console.log("Realtime changes");
-  // Create a function to handle inserts
   const handleDetailsChange = (payload, type) => {
     console.log("Change received!", payload.new, type);
     if (type === "fonts-details") {

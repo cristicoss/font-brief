@@ -74,8 +74,7 @@ async function uploadImgs(store) {
 }
 
 const _getRealtimeChanges = async function () {
-  console.log("getting changes...");
-  // Create a function to handle inserts
+  /// create inserts ///
   const handleChange = (payload) => {
     store.headerImg = payload.new;
   };

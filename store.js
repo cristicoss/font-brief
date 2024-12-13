@@ -27,7 +27,7 @@ export const store = reactive({
   promoFontListArray: allFonts.map((font) => font.Slug),
   promoName: "",
 
-  sliderValue: 60,
+  sliderValue: 100,
 
   fontBGColor: "white-black",
   fontFGColor: "",

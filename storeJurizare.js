@@ -56,6 +56,7 @@ export const store2 = reactive({
 
   jurizarePage: true,
 });
+console.log(store2.currFont);
 
 // if (fontData) {
 //   loadedContent.forEach((el) => {
