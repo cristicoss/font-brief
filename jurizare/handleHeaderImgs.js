@@ -1,4 +1,6 @@
 import { supabase } from "../apiFonts.js";
+import { store } from "../store.js";
+// import { _getRealtimeChanges } from "./getRealTimeChanges.js";
 
 async function uploadImgs(store) {
   const nameInput = document.getElementById("name-header-font");
@@ -71,4 +73,32 @@ async function uploadImgs(store) {
   }
 }
 
-export default uploadImgs;
+const _getRealtimeChanges = async function () {
+  console.log("getting changes...");
+  // Create a function to handle inserts
+  const handleChange = (payload) => {
+    store.headerImg = payload.new;
+  };
+
+  // Listen to inserts
+  supabase
+    .channel("header-imgs")
+    .on(
+      "postgres_changes",
+      { event: "INSERT", schema: "public", table: "header-imgs" },
+      handleChange
+    )
+    .on(
+      "postgres_changes",
+      { event: "DELETE", schema: "public", table: "header-imgs" },
+      handleChange
+    )
+    .on(
+      "postgres_changes",
+      { event: "UPDATE", schema: "public", table: "header-imgs" },
+      handleChange
+    )
+    .subscribe();
+};
+
+export { uploadImgs, _getRealtimeChanges };

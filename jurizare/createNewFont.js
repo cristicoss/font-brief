@@ -91,4 +91,19 @@ async function createFont(store, name) {
   }
 }
 
-export default createFont;
+const removePlaceholderNewFont = function () {
+  const promoFonts = document.querySelectorAll(".promo-font_wrapper");
+  const promoFonts2 = document.querySelectorAll(".promo-font-2_wrapper");
+  const placeHolder = document.querySelectorAll(".placeholder_container");
+
+  placeHolder.forEach((el) => {
+    el.classList.add("loaded");
+  });
+
+  const allPromoFonts = [...promoFonts, ...promoFonts2];
+  allPromoFonts.forEach((el) => {
+    el.classList.add("active");
+  });
+};
+
+export { createFont, removePlaceholderNewFont };

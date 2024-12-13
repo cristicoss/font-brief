@@ -21,17 +21,17 @@ const fetchAll = async function () {
     let new2;
     console.log(promotedFonts);
     fonts.data.forEach((font) => {
-      if (font.Slug === promotedFonts.data[0].Name) {
+      if (font.Slug === promotedFonts.data[2].Name) {
         promo1 = font;
         console.log(font);
       }
-      if (font.Slug === promotedFonts.data[1].Name) {
+      if (font.Slug === promotedFonts.data[3].Name) {
         promo2 = font;
       }
-      if (font.Slug === promotedFonts.data[2].Name) {
+      if (font.Slug === promotedFonts.data[1].Name) {
         new1 = font;
       }
-      if (font.Slug === promotedFonts.data[3].Name) {
+      if (font.Slug === promotedFonts.data[0].Name) {
         new2 = font;
       }
     });
@@ -69,4 +69,40 @@ const fetchAll = async function () {
   }
 };
 
-export default fetchAll;
+const urlParams = new URLSearchParams(window.location.search);
+
+const fetchedFont = async function () {
+  const currFontName = urlParams.get("name").toLowerCase();
+  try {
+    const { data, error } = await supabase
+      .from("fonts")
+      .select("*")
+      .eq("Slug", currFontName);
+
+    if (error) throw error;
+    console.log(currFontName);
+    return data.length ? data[0] : null;
+  } catch (error) {
+    console.error("Failed to fetch font:", error);
+    return null; // Return an empty array or suitable default in case of failure Name
+  }
+};
+
+const fetchedImgDetails = async function () {
+  const currFontName = urlParams.get("name").toLowerCase();
+  try {
+    const { data, error } = await supabase
+      .from("fonts-details")
+      .select("*")
+      .eq("Slug", currFontName);
+
+    if (error) throw error;
+
+    return data.length ? data[0] : null;
+  } catch (error) {
+    console.error("Failed to fetch font:", error);
+    return null; // Return an empty array or suitable default in case of failure
+  }
+};
+
+export { fetchAll, fetchedFont, fetchedImgDetails };

@@ -1,7 +1,12 @@
 // Immediately-invoked function expression to fetch data
 
-import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
+// import { createClient } from "https://cdn.skypack.dev/@supabase/supabase-js";
+console.log(window.supabase); // This should print the Supabase object to the console
 
+// Or, for CDN (global `window.supabase`):
+const { createClient } = window.supabase;
+
+// Initialize Supabase client
 const supabaseUrl = "https://yununbjokononoevrwmu.supabase.co";
 const supabaseKey =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1bnVuYmpva29ub25vZXZyd211Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM0NDU3ODAsImV4cCI6MTk5OTAyMTc4MH0.FYWysDGuFY0-dehJD3aBYEbPLjWOcfzTC3yz0SrW-rE";

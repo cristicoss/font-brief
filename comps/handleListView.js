@@ -1,4 +1,5 @@
 import { list, gridBtn, listBtn, columnsBtn } from "../globalVars.js";
+import _readUrl from "./readUrl.js";
 // let store.itemClass = "list";
 
 export function _handleListView(store) {
@@ -6,7 +7,7 @@ export function _handleListView(store) {
 
   const changeView = function () {
     store.sliderValue = 100;
-    secondThis._readUrl();
+    _readUrl();
   };
 
   gridBtn.addEventListener("click", function () {

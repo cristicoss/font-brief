@@ -272,3 +272,7 @@ input[type="range"]::-moz-range-track {
 .search_field:focus {
   outline: none;
 }
+
+[v-cloak] {
+  display: none;
+}

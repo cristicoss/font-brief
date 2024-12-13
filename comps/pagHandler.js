@@ -1,6 +1,7 @@
 import { listTop, pagContainer, itemsPerPage } from "../globalVars.js";
+import { nextTick } from "../petite-vue/dist/petite-vue.es.js";
 
-export function _paginate(fonts, pageNr) {
+export function _paginate(fonts, pageNr, store) {
   const generatePagNr = function (nrPages, pageNr) {
     for (let i = 1; i <= nrPages; i++) {
       const htmlNumbers = `
@@ -53,7 +54,32 @@ export function _paginate(fonts, pageNr) {
     (pageNr - 1) * itemsPerPage + itemsPerPage
   );
 
-  this._renderFonts(arrRange, itemsPerPage);
+  // this._renderFonts(arrRange, itemsPerPage);
+  const renderFonts = function (fonts, itemsPerPage) {
+    console.log(store.fonts);
+    store.fonts = fonts.slice(0, itemsPerPage);
+
+    const fontItem = document.querySelectorAll(".font-list_item");
+
+    nextTick(() => {
+      if (store.itemFlex === "grid") {
+        store.gridType = true;
+        store.listType = false;
+        store.columnType = false;
+      } else if (store.itemFlex === "list") {
+        store.gridType = false;
+        store.columnType = false;
+        store.listType = true;
+      } else if (store.itemFlex === "columns") {
+        store.gridType = false;
+        store.listType = false;
+        store.columnType = true;
+      }
+
+      this._showItemsWithFadeIn();
+    });
+  };
+  renderFonts(arrRange, itemsPerPage);
 }
 
 //////// Handle click page //////////

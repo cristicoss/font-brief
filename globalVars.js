@@ -48,3 +48,6 @@ export const fbNameIsland = document.querySelector(".fb_name-logo-grey");
 export const menuActionContainer = document.querySelector(
   ".menu_action-container"
 );
+export const loadedContent = document.querySelectorAll(".loaded-content");
+export const unloadedContent = document.querySelectorAll(".unloaded-content");
+export const moreInfoBtn = document.getElementById("more-info");
